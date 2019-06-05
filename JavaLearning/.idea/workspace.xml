@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="05e2cf6b-0ddf-4e2d-96a3-457c26d45bbb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.en.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/cglib_nodep_3_2_12.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/Moniter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/Student.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/StudentCallbackFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/StudyCommittee.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/test2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaLearning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JavaLearning.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -19,49 +25,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/proxyLearning/jdkProxy/JayChou.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/test2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
+            <state relative-caret-position="170">
+              <caret line="8" column="44" lean-forward="true" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
               <folding>
-                <element signature="e#104#105#0" expanded="true" />
-                <element signature="e#146#147#0" expanded="true" />
-                <element signature="e#181#182#0" expanded="true" />
-                <element signature="e#212#213#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/proxyLearning/jdkProxy/Star.java">
+        <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/proxyLearning/jdkProxy/StarProxy.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/proxyLearning/jdkProxy/test.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="21" column="19" lean-forward="true" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+            <state relative-caret-position="102">
+              <caret line="7" column="39" selection-start-line="7" selection-end-line="8" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>intercept</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -74,17 +74,12 @@
         <option value="$PROJECT_DIR$/src/proxyLearning/jdkProxy/StarProxy.java" />
         <option value="$PROJECT_DIR$/src/proxyLearning/jdkProxy/JayChou.java" />
         <option value="$PROJECT_DIR$/src/proxyLearning/jdkProxy/test.java" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-        <option value="$PROJECT_DIR$/ProxyLearning.iml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+        <option value="$PROJECT_DIR$/src/proxyLearning/cglibProxy/Moniter.java" />
+        <option value="$PROJECT_DIR$/src/proxyLearning/cglibProxy/StudyCommittee.java" />
+        <option value="$PROJECT_DIR$/src/proxyLearning/cglibProxy/Student.java" />
+        <option value="$PROJECT_DIR$/src/proxyLearning/cglibProxy/StudentCallbackFilter.java" />
+        <option value="$PROJECT_DIR$/src/proxyLearning/cglibProxy/test.java" />
+        <option value="$PROJECT_DIR$/src/proxyLearning/cglibProxy/test2.java" />
       </list>
     </option>
   </component>
@@ -112,28 +107,20 @@
             <path>
               <item name="JavaLearning" type="b2602c69:ProjectViewProjectNode" />
               <item name="JavaLearning" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="JavaLearning" type="b2602c69:ProjectViewProjectNode" />
               <item name="JavaLearning" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JavaLearning" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JavaLearning" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="JavaLearning" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JavaLearning" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JavaLearning" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="JavaLearning" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="proxyLearning" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JavaLearning" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JavaLearning" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="proxyLearning" type="462c0819:PsiDirectoryNode" />
+              <item name="cglibProxy" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -142,11 +129,15 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../lib/cglib-nodep-3.2.12.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -160,13 +151,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.test (1)">
+  <component name="RunManager" selected="Application.test2">
     <configuration name="test (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="proxyLearning.jdkProxy.test" />
       <module name="JavaLearning" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="proxyLearning.jdkProxy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="proxyLearning.cglibProxy.test" />
+      <module name="JavaLearning" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="proxyLearning.cglibProxy.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -187,8 +191,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="test2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="proxyLearning.cglibProxy.test2" />
+      <module name="JavaLearning" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="proxyLearning.cglibProxy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.test2" />
+        <item itemvalue="Application.test (2)" />
         <item itemvalue="Application.test (1)" />
         <item itemvalue="Application.test" />
       </list>
@@ -205,18 +224,18 @@
       <option name="presentableId" value="Default" />
       <updated>1559718496225</updated>
       <workItem from="1559718503631" duration="706000" />
-      <workItem from="1559721729511" duration="455000" />
+      <workItem from="1559721729511" duration="4785000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1161000" />
+    <option name="totallyTimeSpent" value="5491000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.114727855" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15261473" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -225,7 +244,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32922733" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3717805" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.39977604" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -309,19 +328,304 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/classes/production/JavaLearning/proxyLearning/jdkProxy/RealProxy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1288">
+          <folding>
+            <element signature="e#0#2815#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/proxyLearning/jdkProxy/test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="21" column="19" lean-forward="true" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+        <state relative-caret-position="544">
+          <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../../lib/cglib-nodep-3.2.12.jar!/net/sf/cglib/proxy/MethodProxy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="115" column="18" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/Moniter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="7" column="49" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../../lib/cglib-nodep-3.2.12.jar!/net/sf/cglib/proxy/Enhancer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="247" column="31" selection-start-line="247" selection-start-column="31" selection-end-line="247" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../../lib/cglib-nodep-3.2.12.jar!/net/sf/cglib/core/AbstractClassGenerator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1026">
+          <caret line="150" column="36" selection-start-line="150" selection-start-column="33" selection-end-line="150" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_31/src.zip!/java/lang/System.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="792" column="37" selection-start-line="792" selection-start-column="37" selection-end-line="792" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_31/src.zip!/java/util/Properties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="165" column="17" selection-start-line="165" selection-start-column="17" selection-end-line="165" selection-end-column="17" />
+          <folding>
+            <element signature="e#5711#5712#0" expanded="true" />
+            <element signature="e#5749#5750#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_31/src.zip!/java/util/Hashtable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="455" column="44" selection-start-line="455" selection-start-column="39" selection-end-line="455" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/Student.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="11" column="28" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="28" />
+          <folding>
+            <element signature="e#86#87#0" expanded="true" />
+            <element signature="e#122#123#0" expanded="true" />
+            <element signature="e#166#167#0" expanded="true" />
+            <element signature="e#207#208#0" expanded="true" />
+            <element signature="e#244#245#0" expanded="true" />
+            <element signature="e#287#288#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.project">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.classpath">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JavaLearning.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/net/sf/cglib/core/MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$d45e49f7.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3366">
+          <caret line="21" column="70" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/net/sf/cglib/proxy/Enhancer$EnhancerKey$$KeyFactoryByCGLIB$$7fb24d72.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6212">
+          <caret line="24" column="29" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proxyLearning/cglibProxy/Student$$EnhancerByCGLIB$$96b0cb3c$$FastClassByCGLIB$$59e363e4.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2108">
+          <caret line="13" column="93" selection-start-line="13" selection-start-column="84" selection-end-line="13" selection-end-column="93" />
+          <folding>
+            <element signature="e#0#15061#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proxyLearning/cglibProxy/Student$$EnhancerByCGLIB$$96b0cb3c.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#11257#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proxyLearning/cglibProxy/Student$$FastClassByCGLIB$$ba2a5dfc.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#4561#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../../lib/cglib-nodep-3.2.12.jar!/net/sf/cglib/core/DebuggingClassWriter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="40" column="30" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/StudyCommittee.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="9" column="27" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/StudentCallbackFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/proxyLearning/cglibProxy/Student$$FastClassByCGLIB$$ba2a5dfc.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="17" selection-start-line="17" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/proxyLearning/cglibProxy/Student$$EnhancerByCGLIB$$96b0cb3c$$FastClassByCGLIB$$59e363e4.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/proxyLearning/cglibProxy/Student$$EnhancerByCGLIB$$247f9195$$FastClassByCGLIB$$d27376cf.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-408" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/proxyLearning/cglibProxy/Student$$EnhancerByCGLIB$$96b0cb3c.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3282">
+          <caret line="73" column="24" lean-forward="true" selection-start-line="73" selection-start-column="24" selection-end-line="73" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/proxyLearning/cglibProxy/Student$$EnhancerByCGLIB$$247f9195.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="25" column="47" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="39" selection-start-line="7" selection-end-line="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/test2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="8" column="44" lean-forward="true" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>JavaLearning</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>cglib-nodep-3.2.12</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
