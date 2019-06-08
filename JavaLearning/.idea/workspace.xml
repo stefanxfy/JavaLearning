@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="05e2cf6b-0ddf-4e2d-96a3-457c26d45bbb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/cglib_nodep_3_2_12.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/Moniter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/Student.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/StudentCallbackFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/StudyCommittee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/proxyLearning/cglibProxy/test2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaLearning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JavaLearning.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ProxyLearning/.project" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -28,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/test2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="8" column="44" lean-forward="true" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+            <state relative-caret-position="272">
+              <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -114,13 +107,6 @@
               <item name="JavaLearning" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="proxyLearning" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JavaLearning" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JavaLearning" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="proxyLearning" type="462c0819:PsiDirectoryNode" />
-              <item name="cglibProxy" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -224,18 +210,17 @@
       <option name="presentableId" value="Default" />
       <updated>1559718496225</updated>
       <workItem from="1559718503631" duration="706000" />
-      <workItem from="1559721729511" duration="4785000" />
+      <workItem from="1559721729511" duration="5269000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5491000" />
+    <option name="totallyTimeSpent" value="5975000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15261473" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15261473" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -244,7 +229,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32922733" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.39977604" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.39977604" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -542,8 +527,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/proxyLearning/cglibProxy/test2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="8" column="44" lean-forward="true" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+        <state relative-caret-position="272">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
