@@ -1,5 +1,6 @@
 package annotationLearning;
 
+@Data
 public class User {
     @LengthCheck()
     private String name = "xfystefan";

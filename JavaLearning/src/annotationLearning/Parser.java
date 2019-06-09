@@ -3,7 +3,7 @@ package annotationLearning;
 import java.lang.reflect.Field;
 
 public class Parser {
-    public static void main(String[] args) {
+    public static  void parser1() {
         User u = new User();
         u.setName("zsf");
         try {
@@ -30,5 +30,20 @@ public class Parser {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+    public static  void parser2() {
+        try {
+            Class dataAnn = Class.forName("annotationLearning.Data");
+            Class stuCls = Student.class;
+            if (stuCls.isAnnotationPresent(dataAnn)) {
+                Data data = (Data) stuCls.getAnnotation(dataAnn);
+                System.out.println(data.vlaue());
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void main(String[] args) {
+        parser1();
     }
 }
