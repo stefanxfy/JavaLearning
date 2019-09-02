@@ -1,4 +1,4 @@
-package jvm;
+package jvmLearning;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

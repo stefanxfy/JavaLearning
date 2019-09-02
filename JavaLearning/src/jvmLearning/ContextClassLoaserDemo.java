@@ -1,4 +1,4 @@
-package jvm;
+package jvmLearning;
 
 public class ContextClassLoaserDemo {
     public static void main(String[] args) {

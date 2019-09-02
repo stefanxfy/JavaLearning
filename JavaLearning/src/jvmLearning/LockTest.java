@@ -1,4 +1,7 @@
-package jvm;
+package jvmLearning;
+
+import java.lang.management.*;
+import java.util.List;
 
 /**
  * Create by stefan
@@ -29,6 +32,13 @@ public class LockTest {
             new Thread(new SynAddRunable(1, 2)).start();
             new Thread(new SynAddRunable(2, 1)).start();
 
+        }
+        ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+        int deadLockedThreads = threadMXBean.findDeadlockedThreads().length;
+        System.out.println("死锁线程数量：" + deadLockedThreads);
+        for (long deadlockedThread : threadMXBean.findDeadlockedThreads()) {
+            ThreadInfo threadInfo = threadMXBean.getThreadInfo(deadlockedThread);
+            System.out.println("线程:" + threadInfo.getThreadName() + "正在等待，线程:" + threadInfo.getLockOwnerName() + "持有的锁");
         }
     }
 }

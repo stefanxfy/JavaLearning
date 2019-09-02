@@ -1,4 +1,4 @@
-package jvm;
+package jvmLearning;
 
 import java.util.ArrayList;
 import java.util.List;
