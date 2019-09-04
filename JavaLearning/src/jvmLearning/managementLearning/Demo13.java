@@ -23,19 +23,37 @@ public class Demo13 {
         //name值首字母必须大写
         Attribute attribute = new Attribute("Name", "stefan");
         mBeanServer.setAttribute(helloMxBeanObjectName, attribute);
+        String name = (String) mBeanServer.getAttribute(helloMxBeanObjectName, "Name");
+
+        MBeanInfo mBeanInfo = mBeanServer.getMBeanInfo(helloMxBeanObjectName);
+        System.out.println("mBeanInfo-----------------");
+        for (MBeanAttributeInfo mBeanInfoAttribute : mBeanInfo.getAttributes()) {
+            System.out.println("name=" + mBeanInfoAttribute.getName());
+            System.out.println("type=" + mBeanInfoAttribute.getType());
+        }
+        System.out.println("ClassName=" + mBeanInfo.getClassName());
+        for (MBeanConstructorInfo constructor : mBeanInfo.getConstructors()) {
+            System.out.println("constructor--name=" + constructor.getName());
+            for (MBeanParameterInfo mBeanParameterInfo : constructor.getSignature()) {
+                System.out.println("constructor--mBeanParameterInfo--type=" + mBeanParameterInfo.getType());
+                System.out.println("constructor--mBeanParameterInfo--name=" + mBeanParameterInfo.getName());
+            }
+        }
+        for (MBeanOperationInfo operation : mBeanInfo.getOperations()) {
+            System.out.println("operation--returnType=" + operation.getReturnType());
+            System.out.println("operation--name=" + operation.getName());
+            for (MBeanParameterInfo mBeanParameterInfo : operation.getSignature()) {
+                System.out.println("operation--mBeanParameterInfo--type=" + mBeanParameterInfo.getType());
+                System.out.println("operation--mBeanParameterInfo--name=" + mBeanParameterInfo.getName());
+            }
+
+        }
+        System.out.println("mBeanInfo-----------------");
+
         //调用方法
         Object[] perms = {"stefanxfy"};
         String[] signs = {"java.lang.String"};
         mBeanServer.invoke(helloMxBeanObjectName, "sayHello", perms, signs);
-
-//        Registry registry = LocateRegistry.createRegistry(1099);
-//
-//        //构造JMXServiceURL
-//        JMXServiceURL jmxServiceURL = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi");
-//        //创建JMXConnectorServer
-//        JMXConnectorServer cs = JMXConnectorServerFactory.newJMXConnectorServer(jmxServiceURL, null, mBeanServer);
-//        //启动
-//        cs.start();
 
         Thread.sleep(100000000);
     }
