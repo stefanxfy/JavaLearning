@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5eab0ee9-d11c-450c-9cfc-a2ca6946f402" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="C:\study\maven\repository" />
+        <option name="mavenHome" value="$PROJECT_DIR$/../maven/apache-maven-3.6.3" />
+        <option name="userSettingsFile" value="C:\study\maven\apache-maven-3.6.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1aAB6MH76YYeNLoE9rhU1iHIdys" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/source" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="debugger.stepping" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\study\JavaLearning\src\main\java\com\stefan\proxyLearning\cglibProxy" />
+      <recent name="C:\study\JavaLearning\src\main\java\com\stefan\proxyLearning" />
+      <recent name="C:\study\JavaLearning\src\main\java\com\stefan" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.test2">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.stefan.App" />
+      <module name="JavaLearning" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.stefan.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OOMTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.stefan.jvmLearning.OOMTest" />
+      <module name="JavaLearning" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.stefan.jvmLearning.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.stefan.proxyLearning.cglibProxy.test" />
+      <module name="JavaLearning" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.stefan.proxyLearning.cglibProxy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.stefan.proxyLearning.jdkProxy.test" />
+      <module name="JavaLearning" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.stefan.proxyLearning.jdkProxy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.stefan.proxyLearning.cglibProxy.test2" />
+      <module name="JavaLearning" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.stefan.proxyLearning.cglibProxy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.test2" />
+        <item itemvalue="Application.test (1)" />
+        <item itemvalue="Application.test" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.OOMTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5eab0ee9-d11c-450c-9cfc-a2ca6946f402" name="Default Changelist" comment="" />
+      <created>1586168341343</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586168341343</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="489" y="211" key="FileChooserDialogImpl" timestamp="1586174443354">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="489" y="211" key="FileChooserDialogImpl/0.0.1368.872@0.0.1368.872" timestamp="1586174443354" />
+    <state width="1326" height="95" key="GridCell.Tab.0.bottom" timestamp="1586183951745">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="95" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1586183951745" />
+    <state width="1326" height="95" key="GridCell.Tab.0.center" timestamp="1586183951745">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="95" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1586183951745" />
+    <state width="1326" height="95" key="GridCell.Tab.0.left" timestamp="1586183951745">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="95" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1586183951745" />
+    <state width="1326" height="95" key="GridCell.Tab.0.right" timestamp="1586183951745">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="95" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1586183951745" />
+    <state width="1326" height="281" key="GridCell.Tab.1.bottom" timestamp="1586183951738">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.1.bottom/0.0.1368.872@0.0.1368.872" timestamp="1586183951738" />
+    <state width="1326" height="281" key="GridCell.Tab.1.center" timestamp="1586183951738">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.1.center/0.0.1368.872@0.0.1368.872" timestamp="1586183951738" />
+    <state width="1326" height="281" key="GridCell.Tab.1.left" timestamp="1586183951738">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.1.left/0.0.1368.872@0.0.1368.872" timestamp="1586183951738" />
+    <state width="1326" height="281" key="GridCell.Tab.1.right" timestamp="1586183951738">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.1.right/0.0.1368.872@0.0.1368.872" timestamp="1586183951738" />
+    <state x="188" y="30" key="SettingsEditor" timestamp="1586174447486">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="188" y="30" key="SettingsEditor/0.0.1368.872@0.0.1368.872" timestamp="1586174447486" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/JavaLearning$test__1_.ic" NAME="test (1) Coverage Results" MODIFIED="1586181887295" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.stefan.proxyLearning.cglibProxy.*</FILTER>
+    </SUITE>
+  </component>
+</project>
