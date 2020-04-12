@@ -1,4 +1,6 @@
-package com.stefan.designPattern.singleton;
+package com.stefan.designPattern.singleton.test;
+
+import com.stefan.designPattern.singleton.MultIdGenerator;
 
 public class Test3 {
     public static void main(String[] args) {

@@ -15,7 +15,7 @@
 以**唯一递增 ID 生成器**为案例
 单例模式有两种模式，饿汉式和懒汉式。
 
-#### 1、饿汉式：
+#### 1、饿汉式
 
 饿汉式在类创建的同时就已经创建好一个静态的对象供系统使用，以后不再改变，所以天生是线程安全的。
 ```java
@@ -31,7 +31,7 @@ public class HungryIdGenerator {
     }
 }
 ```
-##### 道听途说：
+**道听途说：**
 
 有人觉得这种实现方式不好，因为不支持延迟加载，如果实例占用资源多（比如占用内存多）或初始化耗时（比如需要加载各种配置文件），提前初始化实例是一种浪费资源的行为。最好的方法应该在用到的时候再去初始化。
 
@@ -41,46 +41,77 @@ public class HungryIdGenerator {
 
 （2）如果实例占用资源多，按照 fail-fast 的设计原则（有问题及早暴露），那我们也希望在程序启动时就将这个实例初始化好。如果资源不够，就会在程序启动的时候触发报错（比如 Java 中的 PermGen Space OOM），我们可以立即去修复。这样也能避免在程序运行一段时间后，突然因为初始化这个实例占用资源过多，导致系统崩溃，影响系统的可用性。
 
-#### 2、懒汉式：
+#### 2、懒汉式
 
 懒汉式相对于饿汉式的优势是支持延迟加载。在第一次调用的时候实例化自己，在对外提供的方法内实例化，需要线程安全的处理。个人觉得懒汉式与饿汉式不分哪个最优，他们有着不同的应用场景。
-
-##### （1）双重检测(double check)
 
 ```java
 public class LazyIdGenerator {
     private AtomicLong id = new AtomicLong(0);
     private static volatile LazyIdGenerator instance = null;
     private LazyIdGenerator() {}
-    public static LazyIdGenerator getInstance() {
+
+    public static synchronized LazyIdGenerator getInstance() {
         if (instance != null) {
             return instance;
         }
-        synchronized (LazyIdGenerator.class) {
+        instance = new LazyIdGenerator();
+        return instance;
+    }
+
+    public long getId() {
+        return id.incrementAndGet();
+    }
+}
+```
+
+
+
+#### 3、双重检测(double check)
+
+```java
+/**
+ * 懒加载：double check
+ */
+public class DoubleCheckIdGenerator {
+    private AtomicLong id = new AtomicLong(0);
+    private static volatile DoubleCheckIdGenerator instance = null;
+    private DoubleCheckIdGenerator() {}
+    public static DoubleCheckIdGenerator getInstance() {
+        if (instance != null) {
+            return instance;
+        }
+        synchronized (DoubleCheckIdGenerator.class) {
             if (instance != null) {
                 return instance;
             }
-            instance = new LazyIdGenerator();
+            instance = new DoubleCheckIdGenerator();
             return instance;
         }
+    }
+    public long getId() {
+        return id.incrementAndGet();
     }
 }
 ```
 volatile 为了防止指令重排，听说高版本的jdk在语言上高版本的 Java 已经在 JDK 内部实现中解决了这个问题（解决的方法很简单，只要把对象 new 操作和初始化操作设计为原子操作，就自然能禁止重排序）。
 
-##### （2）静态内部类
+#### 4、静态内部类
 
 比双重检测更加简单的实现方法，那就是利用 Java 的静态内部类。它有点类似饿汉式，但又能做到了延迟加载。
 
 ```java
-public class Lazy2IdGenerator {
+/**
+ * 懒加载：静态内部类
+ */
+public class StaticInnerClassIdGenerator {
     private AtomicLong id = new AtomicLong(0);
-    private Lazy2IdGenerator(){}
+    private StaticInnerClassIdGenerator(){}
     private static class SingletonHolder{
-        private static final Lazy2IdGenerator instance = new Lazy2IdGenerator();
+        private static final StaticInnerClassIdGenerator instance = new StaticInnerClassIdGenerator();
     }
 
-    public static Lazy2IdGenerator getInstance() {
+    public static StaticInnerClassIdGenerator getInstance() {
         return SingletonHolder.instance;
     }
 
@@ -89,14 +120,17 @@ public class Lazy2IdGenerator {
     }
 }
 ```
-`SingletonHolder`是一个静态内部类，当外部类 `Lazy2IdGenerator` 被加载的时候，并不会创建 `SingletonHolder` 实例对象。只有当调用 `getInstance()` 方法时，`SingletonHolder` 才会被加载，这个时候才会创建 `instance`。
+`SingletonHolder`是一个静态内部类，当外部类 `StaticInnerClassIdGenerator`被加载的时候，并不会创建 `SingletonHolder` 实例对象。只有当调用 `getInstance()` 方法时，`SingletonHolder` 才会被加载，这个时候才会创建 `instance`。
 `instance` 的唯一性、创建过程的线程安全性，都由 JVM 来保证。所以，这种实现方法既保证了线程安全，又能做到延迟加载。
 
-##### （3）枚举
+#### 5、枚举
 
 最简单的实现方式，基于枚举类型的单例实现。这种实现方式通过 Java 枚举类型本身的特性，保证了实例创建的线程安全性和实例的唯一性。
 ```java
-public enum Lazy3IdGenerator {
+/**
+ * 枚举单例-饿汉，推荐
+ */
+public enum IdGeneratorEnum {
     INSTANCE;
     private AtomicLong id = new AtomicLong(0);
     public long getId() {
@@ -123,26 +157,26 @@ public enum Lazy3IdGenerator {
 // Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) 
-// Source File Name:   Lazy3IdGenerator.java
+// Source File Name:   IdGeneratorEnum.java
 
 package com.stefan.designPattern.singleton;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-public final class Lazy3IdGenerator extends Enum
+public final class IdGeneratorEnum extends Enum
 {
 
-    public static Lazy3IdGenerator[] values()
+    public static IdGeneratorEnum[] values()
     {
-        return (Lazy3IdGenerator[])$VALUES.clone();
+        return (IdGeneratorEnum[])$VALUES.clone();
     }
 
-    public static Lazy3IdGenerator valueOf(String name)
+    public static IdGeneratorEnum valueOf(String name)
     {
-        return (Lazy3IdGenerator)Enum.valueOf(com/stefan/designPattern/singleton/Lazy3IdGenerator, name);
+        return (IdGeneratorEnum)Enum.valueOf(com/stefan/designPattern/singleton/IdGeneratorEnum, name);
     }
 
-    private Lazy3IdGenerator(String s, int i)
+    private IdGeneratorEnum(String s, int i)
     {
         super(s, i);
         id = new AtomicLong(0L);
@@ -153,14 +187,14 @@ public final class Lazy3IdGenerator extends Enum
         return id.incrementAndGet();
     }
 
-    public static final Lazy3IdGenerator INSTANCE;
+    public static final IdGeneratorEnum INSTANCE;
     private AtomicLong id;
-    private static final Lazy3IdGenerator $VALUES[];
+    private static final IdGeneratorEnum $VALUES[];
 
     static 
     {
-        INSTANCE = new Lazy3IdGenerator("INSTANCE", 0);
-        $VALUES = (new Lazy3IdGenerator[] {
+        INSTANCE = new IdGeneratorEnum("INSTANCE", 0);
+        $VALUES = (new IdGeneratorEnum[] {
             INSTANCE
         });
     }
@@ -254,17 +288,16 @@ public class ThreadIdGenerator {
 /**
  * 线程唯一单例  ThreadLocal
  */
-public class ThreadIdGenerator2 {
-    private ThreadIdGenerator2(){}
+public class ThreadLocalIdGenerator {
     private AtomicLong id = new AtomicLong(0);
-    private static ThreadLocal<ThreadIdGenerator2> instances = new ThreadLocal<ThreadIdGenerator2>();
-
-    public static ThreadIdGenerator2 getIntance() {
-        ThreadIdGenerator2 instance = instances.get();
+    private static ThreadLocal<ThreadLocalIdGenerator> instances = new ThreadLocal<ThreadLocalIdGenerator>();
+    private ThreadLocalIdGenerator(){}
+    public static ThreadLocalIdGenerator getIntance() {
+        ThreadLocalIdGenerator instance = instances.get();
         if (instance != null) {
             return instance;
         }
-        instance = new ThreadIdGenerator2();
+        instance = new ThreadLocalIdGenerator();
         instances.set(instance);
         return instance;
     }
@@ -279,22 +312,23 @@ public class Test {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                System.out.println("sub1: " + ThreadIdGenerator2.getIntance().toString() + "-->" + ThreadIdGenerator2.getIntance().getId());
-                System.out.println("sub2: " + ThreadIdGenerator2.getIntance().toString() + "-->" + ThreadIdGenerator2.getIntance().getId());
+                System.out.println("sub1: " + ThreadLocalIdGenerator.getIntance().toString() + "-->" + ThreadLocalIdGenerator.getIntance().getId());
+                System.out.println("sub2: " + ThreadLocalIdGenerator.getIntance().toString() + "-->" + ThreadLocalIdGenerator.getIntance().getId());
 
             }
         };
         thread.start();
         thread.join();
-        System.out.println("main1: " + ThreadIdGenerator2.getIntance().toString() + "-->" + ThreadIdGenerator2.getIntance().getId());
-        System.out.println("main2: " + ThreadIdGenerator2.getIntance().toString() + "-->" + ThreadIdGenerator2.getIntance().getId());
+        
+        System.out.println("main1: " + ThreadLocalIdGenerator.getIntance().toString() + "-->" + ThreadLocalIdGenerator.getIntance().getId());
+        System.out.println("main2: " + ThreadLocalIdGenerator.getIntance().toString() + "-->" + ThreadLocalIdGenerator.getIntance().getId());
     }
 }
 // 控制台打印
-sub1: ThreadIdGenerator2@480a0d08-->1
-sub2: ThreadIdGenerator2@480a0d08-->2
-main1: ThreadIdGenerator2@4f3f5b24-->1
-main2: ThreadIdGenerator2@4f3f5b24-->2    
+sub1: com.stefan.designPattern.singleton.ThreadLocalIdGenerator@480a0d08-->1
+sub2: com.stefan.designPattern.singleton.ThreadLocalIdGenerator@480a0d08-->2
+main1: com.stefan.designPattern.singleton.ThreadLocalIdGenerator@4f3f5b24-->1
+main2: com.stefan.designPattern.singleton.ThreadLocalIdGenerator@4f3f5b24-->2  
 ```
 
 显然主线程和子线程生成的单例不是同一个，且一个线程调用多次生成的是同一个单例对象。
@@ -312,6 +346,8 @@ main2: ThreadIdGenerator2@4f3f5b24-->2
 #### 4、实现一个多例模式
 
 “单例”指的是，一个类只能创建一个对象。对应地，“多例”指的就是，一个类可以创建多个对象，但是个数是有限制的，比如只能创建 3 个对象。
+
+##### （1）以map存储多例的方式
 
 ```java
 /**
@@ -365,6 +401,104 @@ PRODUCT: com.stefan.designPattern.singleton.MultIdGenerator@15aeb7ab-->1
 PRODUCT: com.stefan.designPattern.singleton.MultIdGenerator@15aeb7ab-->2
 ORDER: com.stefan.designPattern.singleton.MultIdGenerator@7b23ec81-->1
 ORDER: com.stefan.designPattern.singleton.MultIdGenerator@7b23ec81-->2
+```
+
+##### （2）使用枚举实现多例模式：
+
+```java
+/**
+ * 多例模式的唯一自增id生成器
+ *  用户表一个IdGenerator
+ *  商品表一个IdGenerator
+ *  订单表一个IdGenerator
+ *
+ *  枚举无法实现多例模式
+ */
+public enum MultIdGeneratorEnum {
+    USER,
+    PRODUCT,
+    ORDER;
+    private AtomicLong id = new AtomicLong(0);
+
+    public long getId() {
+        return id.incrementAndGet();
+    }
+}
+测试
+public class Test2 {
+    public static void main(String[] args) {
+        System.out.println("USER: " + MultIdGeneratorEnum.USER.toString() + "-->" + MultIdGeneratorEnum.USER.getId());
+        System.out.println("USER: " + MultIdGeneratorEnum.USER.toString() + "-->" + MultIdGeneratorEnum.USER.getId());
+
+        System.out.println("PRODUCT: " + MultIdGeneratorEnum.PRODUCT.toString() + "-->" + MultIdGeneratorEnum.PRODUCT.getId());
+        System.out.println("PRODUCT: " + MultIdGeneratorEnum.PRODUCT.toString() + "-->" + MultIdGeneratorEnum.PRODUCT.getId());
+
+        System.out.println("ORDER: " + MultIdGeneratorEnum.ORDER.toString() + "-->" + MultIdGeneratorEnum.ORDER.getId());
+        System.out.println("ORDER: " + MultIdGeneratorEnum.ORDER.toString() + "-->" + MultIdGeneratorEnum.ORDER.getId());
+        //USER: USER-->1
+        //USER: USER-->2
+        //PRODUCT: PRODUCT-->1
+        //PRODUCT: PRODUCT-->2
+        //ORDER: ORDER-->1
+        //ORDER: ORDER-->2
+    }
+}
+```
+
+枚举的方式明显要简洁很多，**强烈推荐用枚举方式实现单例和多例模式。**
+
+使用`jad`反编译`MultIdGeneratorEnum.class` :
+
+```java
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   MultIdGeneratorEnum.java
+
+package com.stefan.designPattern.singleton;
+
+import java.util.concurrent.atomic.AtomicLong;
+
+public final class MultIdGeneratorEnum extends Enum
+{
+
+    public static MultIdGeneratorEnum[] values()
+    {
+        return (MultIdGeneratorEnum[])$VALUES.clone();
+    }
+
+    public static MultIdGeneratorEnum valueOf(String name)
+    {
+        return (MultIdGeneratorEnum)Enum.valueOf(com/stefan/designPattern/singleton/MultIdGeneratorEnum, name);
+    }
+
+    private MultIdGeneratorEnum(String s, int i)
+    {
+        super(s, i);
+        id = new AtomicLong(0L);
+    }
+
+    public long getId()
+    {
+        return id.incrementAndGet();
+    }
+
+    public static final MultIdGeneratorEnum USER;
+    public static final MultIdGeneratorEnum PRODUCT;
+    public static final MultIdGeneratorEnum ORDER;
+    private AtomicLong id;
+    private static final MultIdGeneratorEnum $VALUES[];
+
+    static 
+    {
+        USER = new MultIdGeneratorEnum("USER", 0);
+        PRODUCT = new MultIdGeneratorEnum("PRODUCT", 1);
+        ORDER = new MultIdGeneratorEnum("ORDER", 2);
+        $VALUES = (new MultIdGeneratorEnum[] {
+            USER, PRODUCT, ORDER
+        });
+    }
+}
 ```
 
 多例模式很像工厂模式，它跟工厂模式的不同之处是，**多例模式创建的对象都是同一个类的对象，而工厂模式创建的是不同子类的对象。**

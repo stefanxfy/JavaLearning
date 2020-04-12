@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  *  枚举无法实现多例模式
  */
-public enum MultIdGenerator1 {
+public enum MultIdGeneratorEnum {
     USER,
     PRODUCT,
     ORDER;

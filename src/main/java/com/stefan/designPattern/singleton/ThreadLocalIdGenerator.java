@@ -5,16 +5,16 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * 线程唯一单例  ThreadLocal
  */
-public class ThreadIdGenerator2 {
+public class ThreadLocalIdGenerator {
     private AtomicLong id = new AtomicLong(0);
-    private static ThreadLocal<ThreadIdGenerator2> instances = new ThreadLocal<ThreadIdGenerator2>();
-    private ThreadIdGenerator2(){}
-    public static ThreadIdGenerator2 getIntance() {
-        ThreadIdGenerator2 instance = instances.get();
+    private static ThreadLocal<ThreadLocalIdGenerator> instances = new ThreadLocal<ThreadLocalIdGenerator>();
+    private ThreadLocalIdGenerator(){}
+    public static ThreadLocalIdGenerator getIntance() {
+        ThreadLocalIdGenerator instance = instances.get();
         if (instance != null) {
             return instance;
         }
-        instance = new ThreadIdGenerator2();
+        instance = new ThreadLocalIdGenerator();
         instances.set(instance);
         return instance;
     }
