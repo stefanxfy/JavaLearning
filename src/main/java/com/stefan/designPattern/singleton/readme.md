@@ -117,6 +117,58 @@ public enum Lazy3IdGenerator {
 - 线程安全。
 - 防止反序列化和反射的破坏。
 
+通过jad反编译工具将枚举单例反编译：
+
+```java
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Lazy3IdGenerator.java
+
+package com.stefan.designPattern.singleton;
+
+import java.util.concurrent.atomic.AtomicLong;
+
+public final class Lazy3IdGenerator extends Enum
+{
+
+    public static Lazy3IdGenerator[] values()
+    {
+        return (Lazy3IdGenerator[])$VALUES.clone();
+    }
+
+    public static Lazy3IdGenerator valueOf(String name)
+    {
+        return (Lazy3IdGenerator)Enum.valueOf(com/stefan/designPattern/singleton/Lazy3IdGenerator, name);
+    }
+
+    private Lazy3IdGenerator(String s, int i)
+    {
+        super(s, i);
+        id = new AtomicLong(0L);
+    }
+
+    public long getId()
+    {
+        return id.incrementAndGet();
+    }
+
+    public static final Lazy3IdGenerator INSTANCE;
+    private AtomicLong id;
+    private static final Lazy3IdGenerator $VALUES[];
+
+    static 
+    {
+        INSTANCE = new Lazy3IdGenerator("INSTANCE", 0);
+        $VALUES = (new Lazy3IdGenerator[] {
+            INSTANCE
+        });
+    }
+}
+```
+
+
+
 ### 五、单例模式存在哪些问题?
 
 单例模式有节省资源、保证结果正确、方便管理等优点，同时也存在一些问题。
