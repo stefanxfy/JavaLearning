@@ -2,16 +2,15 @@
 
 ## 单例设计模式（Singleton Design Pattern）
 
-### 一、定义：
-一个类只允许创建一个对象（或者实例），那这个类就是一个单例类，
-这种设计模式就叫作单例设计模式，简称单例模式。
+### 一、定义
+一个类只允许创建一个对象（或者实例），那这个类就是一个单例类，这种设计模式就叫作单例设计模式，简称单例模式。
 
-### 二、用途：
+### 二、用途
 
-从业务概念上，有些数据在系统中只应该保存一份，就比较适合设计为单例类。比如，全局配置信息类。
+从业务概念上，有些数据在系统中只应该保存一份，就比较适合设计为单例类。比如，无状态工具类、全局配置信息类。
 
 
-### 三、实现方式：
+### 三、实现方式
 以**唯一递增 ID 生成器**为案例
 单例模式有两种模式，饿汉式和懒汉式。
 
@@ -37,13 +36,12 @@ public class HungryIdGenerator {
 
 不过，我个人并不认同这样的观点，理由如下：
 
-（1）如果初始化耗时长，那我们最好不要等到真正要用它的时候，才去执行这个耗时长的初始化过程，这会影响到系统的性能（比如，在响应客户端接口请求的时候，做这个初始化操作，会导致此请求的响应时间变长，甚至超时）。采用饿汉式实现方式，将耗时的初始化操作，提前到程序启动的时候完成，这样就能避免在程序运行的时候，再去初始化导致的性能问题。
-
-（2）如果实例占用资源多，按照 fail-fast 的设计原则（有问题及早暴露），那我们也希望在程序启动时就将这个实例初始化好。如果资源不够，就会在程序启动的时候触发报错（比如 Java 中的 PermGen Space OOM），我们可以立即去修复。这样也能避免在程序运行一段时间后，突然因为初始化这个实例占用资源过多，导致系统崩溃，影响系统的可用性。
+- 如果实例占用资源多，按照 fail-fast 的设计原则（有问题及早暴露），在程序启动时初始化单例，尽早报`OOM`，以免程序在正常运行中，第一次加载单例突然`OOM`导致系统崩溃。
+- 如果加载比较耗时，更应该在程序启动时加初始化好单例了，而不是在程序运行中占用正常请求的时长，导致请求缓慢甚至超时报错。
 
 #### 2、懒汉式
 
-懒汉式相对于饿汉式的优势是支持延迟加载。在第一次调用的时候实例化自己，在对外提供的方法内实例化，需要线程安全的处理。个人觉得懒汉式与饿汉式不分哪个最优，他们有着不同的应用场景。
+懒汉式相对于饿汉式的优势是支持延迟加载。在对外提供的方法内实例化，需要线程安全的处理。个人觉得懒汉式与饿汉式不分哪个最优，他们有着不同的应用场景。
 
 ```java
 public class LazyIdGenerator {
@@ -65,9 +63,11 @@ public class LazyIdGenerator {
 }
 ```
 
-
+把`synchronized`加在方法上，使得每次获得实例都要操作锁，开销很大，性能很低。强烈不推荐这种方式实现单例。
 
 #### 3、双重检测(double check)
+
+双重检测是懒汉式的升级版，只有在第一次初始化时加锁，以后不会再加锁。个人觉得双重检测的懒汉式与饿汉式不分哪个最优，他们有着不同的应用场景。
 
 ```java
 /**
@@ -94,7 +94,15 @@ public class DoubleCheckIdGenerator {
     }
 }
 ```
-volatile 为了防止指令重排，听说高版本的jdk在语言上高版本的 Java 已经在 JDK 内部实现中解决了这个问题（解决的方法很简单，只要把对象 new 操作和初始化操作设计为原子操作，就自然能禁止重排序）。
+`instance` 成员变量加了`volatile` 关键字，是为了防止指令重排，因为`instance = new DoubleCheckIdGenerator();` 并不是一个原子操作，其在jvn中至少做了三件事：
+
+1. 给instance在堆上分配内存空间。(分配内存)
+2. 调用`DoubleCheckIdGenerator`的构造函数等来初始化instance。（初始化）
+3. 将instance对象指向分配的内存空间。（执行完这一步instance就不是null了）
+
+在没有`volatile`修饰时，执行顺序可以是1,2,3，也可以是1,3,2。假设有两个线程，当一个线程执行了3，还没执行2，此时第二个线程来到第一个check，发现instance不为null，就直接返回了，这就出现问题，这时的instance并没有完全完成初始化。
+
+听说在语言上高版本的 Java 已经在 JDK 内部实现中解决了这个问题（解决的方法很简单，只要把对象 new 操作和初始化操作设计为原子操作，就自然能禁止重排序）。但是并没有在官方资料中看到，所以以防万一，还是加上`volatile` 这个关键字。
 
 #### 4、静态内部类
 
@@ -139,13 +147,13 @@ public enum IdGeneratorEnum {
 }
 ```
 
-### 四、反序列化和反射对单例模式的影响
+### 四、枚举单例模式是世界上最好的单例模式
 
 饿汉式以及懒汉式中的双重检查式、静态内部类式都无法避免被反序列化和反射生成多个实例。而枚举方式实现的单例模式不仅能避免多线程同步的问题，也可以防止反序列化和反射的破坏。
 
 **Joshua Bloch 在《Effective Java》中明确表明，枚举类型实现的单例模式是最佳的方式。**
 
-枚举单例模式具有以下几点优点：
+枚举单例模式具有以下三个优点：
 
 - 写法简洁，代码短小精悍。
 - 线程安全。
@@ -201,7 +209,77 @@ public final class IdGeneratorEnum extends Enum
 }
 ```
 
+#### 1、JVM级别的线程安全
 
+反编译的代码中可以发现枚举中的各个枚举项都是通过static代码块来定义和初始化的，他们会在类被加载时完成初始化，而java类的加载由`JVM`保证线程安全。
+
+#### 2、防止反序列化的破坏
+
+Java的序列化专门对枚举的序列化做了规定，在序列化时，仅仅是将枚举对象的name属性输出到结果中，在反序列化时通过`java.lang.Enum`的`valueOf`方法来根据名字查找对象，而不是新建一个新的对象，所以就防止了反序列化导致单例破坏的现象。可以查看`java.io.ObjectInputStream#readObject`验证。`readObject`判断到枚举类时，调用的了这个方法`java.io.ObjectInputStream#readEnum`
+
+```java
+private Enum<?> readEnum(boolean unshared) throws IOException {
+    if (this.bin.readByte() != 126) {
+        throw new InternalError();
+    } else {
+        ObjectStreamClass desc = this.readClassDesc(false);
+        if (!desc.isEnum()) {
+            throw new InvalidClassException("non-enum class: " + desc);
+        } else {
+            int enumHandle = this.handles.assign(unshared ? unsharedMarker : null);
+            ClassNotFoundException resolveEx = desc.getResolveException();
+            if (resolveEx != null) {
+                this.handles.markException(enumHandle, resolveEx);
+            }
+
+            String name = this.readString(false);
+            Enum<?> result = null;
+            Class<?> cl = desc.forClass();
+            if (cl != null) {
+                try {
+                    Enum<?> en = Enum.valueOf(cl, name);
+                    result = en;
+                } catch (IllegalArgumentException var9) {
+                    throw (IOException)(new InvalidObjectException("enum constant " + name + " does not exist in " + cl)).initCause(var9);
+                }
+
+                if (!unshared) {
+                    this.handles.setObject(enumHandle, result);
+                }
+            }
+
+            this.handles.finish(enumHandle);
+            this.passHandle = enumHandle;
+            return result;
+        }
+    }
+}
+```
+
+#### 3、防止反射的破坏
+
+对于反射，枚举类同样有防御措施，反射在通过`newInstance`创建对象时会检查这个类是否是枚举类，如果是枚举类就会`throw new IllegalArgumentException("Cannot reflectively create enum objects");`,如下是源码`java.lang.reflect.Constructor#newInstance`：
+
+```java
+public T newInstance(Object... initargs) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        if (!this.override) {
+            Class<?> caller = Reflection.getCallerClass();
+            this.checkAccess(caller, this.clazz, this.clazz, this.modifiers);
+        }
+
+        if ((this.clazz.getModifiers() & 16384) != 0) {
+            throw new IllegalArgumentException("Cannot reflectively create enum objects");
+        } else {
+            ConstructorAccessor ca = this.constructorAccessor;
+            if (ca == null) {
+                ca = this.acquireConstructorAccessor();
+            }
+
+            T inst = ca.newInstance(initargs);
+            return inst;
+        }
+    }
+```
 
 ### 五、单例模式存在哪些问题?
 
@@ -403,7 +481,7 @@ ORDER: com.stefan.designPattern.singleton.MultIdGenerator@7b23ec81-->1
 ORDER: com.stefan.designPattern.singleton.MultIdGenerator@7b23ec81-->2
 ```
 
-##### （2）使用枚举实现多例模式：
+##### （2）使用枚举实现多例模式
 
 ```java
 /**
@@ -445,7 +523,7 @@ public class Test2 {
 }
 ```
 
-枚举的方式明显要简洁很多，**强烈推荐用枚举方式实现单例和多例模式。**
+枚举的方式明显要简洁很多，**强烈推荐用枚举方式实现单例和多例模式。** 通过反编译查看源码枚举方式实现的多例其实和前面以map存储多例的方式差不多的原理，都是用`HashMap`把实例化对象存储起来。
 
 使用`jad`反编译`MultIdGeneratorEnum.class` :
 
@@ -502,3 +580,116 @@ public final class MultIdGeneratorEnum extends Enum
 ```
 
 多例模式很像工厂模式，它跟工厂模式的不同之处是，**多例模式创建的对象都是同一个类的对象，而工厂模式创建的是不同子类的对象。**
+
+### 八、枚举源码补充
+
+一个枚举类反编译之后，可以看到其继承自`java.lang.Enum`，其中有一个valueof的方法是直接调用`java.lang.Enum#valueOf`的。其底层是一个key为name，value为Enum类型的实例化对象。通过源码可以验证：
+
+```java
+package java.lang;
+
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
+
+public abstract class Enum<E extends Enum<E>> implements Comparable<E>, Serializable {
+    private final String name;
+    private final int ordinal;
+
+    public final String name() {
+        return this.name;
+    }
+
+    public final int ordinal() {
+        return this.ordinal;
+    }
+
+    protected Enum(String name, int ordinal) {
+        this.name = name;
+        this.ordinal = ordinal;
+    }
+
+    public String toString() {
+        return this.name;
+    }
+
+    public final boolean equals(Object other) {
+        return this == other;
+    }
+
+    public final int hashCode() {
+        return super.hashCode();
+    }
+
+    protected final Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
+
+    public final int compareTo(E o) {
+        if (this.getClass() != o.getClass() && this.getDeclaringClass() != o.getDeclaringClass()) {
+            throw new ClassCastException();
+        } else {
+            return this.ordinal - o.ordinal;
+        }
+    }
+
+    public final Class<E> getDeclaringClass() {
+        Class<?> clazz = this.getClass();
+        Class<?> zuper = clazz.getSuperclass();
+        return zuper == Enum.class ? clazz : zuper;
+    }
+
+    public static <T extends Enum<T>> T valueOf(Class<T> enumType, String name) {
+        //关键性代码，好比是hashmap缓存
+        T result = (Enum)enumType.enumConstantDirectory().get(name);
+        if (result != null) {
+            return result;
+        } else if (name == null) {
+            throw new NullPointerException("Name is null");
+        } else {
+            throw new IllegalArgumentException("No enum constant " + enumType.getCanonicalName() + "." + name);
+        }
+    }
+
+    protected final void finalize() {
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        throw new InvalidObjectException("can't deserialize enum");
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        throw new InvalidObjectException("can't deserialize enum");
+    }
+}
+```
+
+`java.lang.Enum#valueOf`中第一行代码调用的是`java.lang.Class#enumConstantDirectory`，部分源码如下，Class类中有一个成员变量是`HashMap`，原理一目了然。
+
+```java
+private transient volatile Map<String, T> enumConstantDirectory;
+Map<String, T> enumConstantDirectory() {
+        Map<String, T> directory = this.enumConstantDirectory;
+        if (directory == null) {
+            T[] universe = this.getEnumConstantsShared();
+            if (universe == null) {
+                throw new IllegalArgumentException(this.getName() + " is not an enum type");
+            }
+
+            directory = new HashMap((int)((float)universe.length / 0.75F) + 1);
+            Object[] var3 = universe;
+            int var4 = universe.length;
+
+            for(int var5 = 0; var5 < var4; ++var5) {
+                T constant = var3[var5];
+                ((Map)directory).put(((Enum)constant).name(), constant);
+            }
+
+            this.enumConstantDirectory = (Map)directory;
+        }
+        return (Map)directory;
+}
+```
+
