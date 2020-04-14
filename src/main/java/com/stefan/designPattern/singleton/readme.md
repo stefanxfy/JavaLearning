@@ -16,7 +16,7 @@
 
 #### 1、饿汉式
 
-饿汉式在类创建的同时就已经创建好一个静态的对象供系统使用，以后不再改变，所以天生是线程安全的。
+饿汉式在类加载的同时就已经创建好一个静态的对象供系统使用，其唯一性和线程安全性都由`JVM`保证。
 ```java
 public class HungryIdGenerator {
     private static final HungryIdGenerator instance = new HungryIdGenerator();
@@ -36,12 +36,12 @@ public class HungryIdGenerator {
 
 不过，我个人并不认同这样的观点，理由如下：
 
-- 如果实例占用资源多，按照 fail-fast 的设计原则（有问题及早暴露），在程序启动时初始化单例，尽早报`OOM`，以免程序在正常运行中，第一次加载单例突然`OOM`导致系统崩溃。
-- 如果加载比较耗时，更应该在程序启动时加初始化好单例了，而不是在程序运行中占用正常请求的时长，导致请求缓慢甚至超时报错。
+- 如果实例占用资源多，按照 fail-fast 的设计原则（有问题及早暴露），在程序启动时初始化单例，尽早报`OOM`，以免程序在正常运行时，因为首次加载单例突然`OOM`导致系统崩溃。
+- 如果加载比较耗时，更应该在程序启动时初始化好单例了，而不是在程序运行中占用正常请求的时长，导致请求缓慢甚至超时报错。
 
 #### 2、懒汉式
 
-懒汉式相对于饿汉式的优势是支持延迟加载。在对外提供的方法内实例化，需要线程安全的处理。个人觉得懒汉式与饿汉式不分哪个最优，他们有着不同的应用场景。
+懒汉式相对于饿汉式的优势是支持延迟加载。在对外提供的方法内实例化，需要线程安全的处理。
 
 ```java
 public class LazyIdGenerator {
@@ -63,7 +63,7 @@ public class LazyIdGenerator {
 }
 ```
 
-把`synchronized`加在方法上，使得每次获得实例都要操作锁，开销很大，性能很低。强烈不推荐这种方式实现单例。
+把`synchronized`加在方法上，使得每次获得实例都要同步，开销很大，性能很低。强烈不推荐这种方式实现单例。
 
 #### 3、双重检测(double check)
 
@@ -94,15 +94,15 @@ public class DoubleCheckIdGenerator {
     }
 }
 ```
-`instance` 成员变量加了`volatile` 关键字，是为了防止指令重排，因为`instance = new DoubleCheckIdGenerator();` 并不是一个原子操作，其在jvn中至少做了三件事：
+`instance` 成员变量加了`volatile` 关键字修饰，是为了防止指令重排，因为`instance = new DoubleCheckIdGenerator();` 并不是一个原子操作，其在`JVM`中至少做了三件事：
 
 1. 给instance在堆上分配内存空间。(分配内存)
 2. 调用`DoubleCheckIdGenerator`的构造函数等来初始化instance。（初始化）
 3. 将instance对象指向分配的内存空间。（执行完这一步instance就不是null了）
 
-在没有`volatile`修饰时，执行顺序可以是1,2,3，也可以是1,3,2。假设有两个线程，当一个线程执行了3，还没执行2，此时第二个线程来到第一个check，发现instance不为null，就直接返回了，这就出现问题，这时的instance并没有完全完成初始化。
+在没有`volatile`修饰时，执行顺序可以是1,2,3，也可以是1,3,2。假设有两个线程，当一个线程先执行了3，还没执行2，此时第二个线程来到第一个check，发现instance不为null，就直接返回了，这就出现问题，这时的instance并没有完全完成初始化。
 
-听说在语言上高版本的 Java 已经在 JDK 内部实现中解决了这个问题（解决的方法很简单，只要把对象 new 操作和初始化操作设计为原子操作，就自然能禁止重排序）。但是并没有在官方资料中看到，所以以防万一，还是加上`volatile` 这个关键字。
+听说高版本的 Java 已经在 `JDK` 内部实现中解决了这个问题（解决的方法很简单，只要把对象 new 操作和初始化操作设计为原子操作，就自然能禁止重排序）。但是并没有在官方资料中看到，所以以防万一，还是加上`volatile` 这个关键字。
 
 #### 4、静态内部类
 
@@ -129,7 +129,8 @@ public class StaticInnerClassIdGenerator {
 }
 ```
 `SingletonHolder`是一个静态内部类，当外部类 `StaticInnerClassIdGenerator`被加载的时候，并不会创建 `SingletonHolder` 实例对象。只有当调用 `getInstance()` 方法时，`SingletonHolder` 才会被加载，这个时候才会创建 `instance`。
-`instance` 的唯一性、创建过程的线程安全性，都由 JVM 来保证。所以，这种实现方法既保证了线程安全，又能做到延迟加载。
+
+`instance` 的唯一性、创建过程的线程安全性，都由 `JVM`来保证。所以，这种实现方法既保证了线程安全，又能做到延迟加载。
 
 #### 5、枚举
 
@@ -164,7 +165,7 @@ public enum IdGeneratorEnum {
 ```java
 // Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
+// Decompiler options: packimports(3)
 // Source File Name:   IdGeneratorEnum.java
 
 package com.stefan.designPattern.singleton;
@@ -199,7 +200,7 @@ public final class IdGeneratorEnum extends Enum
     private AtomicLong id;
     private static final IdGeneratorEnum $VALUES[];
 
-    static 
+    static
     {
         INSTANCE = new IdGeneratorEnum("INSTANCE", 0);
         $VALUES = (new IdGeneratorEnum[] {
@@ -211,11 +212,13 @@ public final class IdGeneratorEnum extends Enum
 
 #### 1、JVM级别的线程安全
 
-反编译的代码中可以发现枚举中的各个枚举项都是通过static代码块来定义和初始化的，他们会在类被加载时完成初始化，而java类的加载由`JVM`保证线程安全。
+反编译的代码中可以发现枚举中的各个枚举项都是通过static代码块来定义和初始化的，他们会在类被加载时完成初始化，而Java的类加载由`JVM`保证线程安全。
 
 #### 2、防止反序列化的破坏
 
-Java的序列化专门对枚举的序列化做了规定，在序列化时，仅仅是将枚举对象的name属性输出到结果中，在反序列化时通过`java.lang.Enum`的`valueOf`方法来根据名字查找对象，而不是新建一个新的对象，所以就防止了反序列化导致单例破坏的现象。可以查看`java.io.ObjectInputStream#readObject`验证。`readObject`判断到枚举类时，调用的了这个方法`java.io.ObjectInputStream#readEnum`
+Java的序列化专门对枚举的序列化做了规定，在序列化时，只是将枚举对象的name属性输出到结果中，在反序列化时通过`java.lang.Enum`的`valueOf`方法根据名字查找对象，而不是新建一个新的对象，所以防止了反序列化对单例的破坏。
+
+可以查看`java.io.ObjectInputStream#readObject`验证。`readObject`判断到枚举类时，调用的了这个方法`java.io.ObjectInputStream#readEnum`
 
 ```java
 private Enum<?> readEnum(boolean unshared) throws IOException {
@@ -289,25 +292,25 @@ public T newInstance(Object... initargs) throws InstantiationException, IllegalA
 
 OOP 的四大特性是封装、抽象、继承、多态。单例模式对于其中的抽象、继承、多态都支持得不好。
 
-就拿唯一递增id生成器来说，上面实现的单例IdGenerator 的使用方式违背了基于接口而非实现的设计原则，也就违背了广义上理解的 OOP 的抽象特性。如果未来某一天，我们希望针对不同的业务采用不同的 ID 生成算法。比如，订单 ID 和用户 ID 采用不同的 ID 生成器来生成。为了应对这个需求变化，我们需要修改所有用到 IdGenerator 类的地方，这样代码的改动就会比较大。
+就拿唯一递增id生成器来说，上面实现的单例IdGenerator 的使用方式违背了基于接口而非实现的设计原则，也就违背了广义上理解的 OOP 的抽象特性。如果未来某一天，希望针对不同的业务采用不同的 ID 生成算法。比如，订单 ID 和用户 ID 采用不同的 ID 生成器来生成。为了应对这个需求变化，我们需要修改所有用到 IdGenerator 类的地方，这样代码的改动就会比较大。
 
-除此之外，单例对继承、多态特性的支持也不友好。这里我之所以会用“不友好”这个词，而非“完全不支持”，是因为从理论上来讲，单例类也可以被继承、也可以实现多态，只是实现起来会非常奇怪，会导致代码的可读性变差。所以，一旦你选择将某个类设计成到单例类，也就意味着放弃了继承和多态这两个强有力的面向对象特性，也就相当于损失了可以应对未来需求变化的扩展性。
+除此之外，单例对继承、多态特性的支持也不友好。从理论上来讲，单例类也可以被继承、也可以实现多态，只是实现起来会非常奇怪，导致代码的可读性变差。所以，一旦选择将某个类设计成到单例类，也就意味着放弃了继承和多态这两个强有力的面向对象特性，也就相当于损失了可以应对未来需求变化的扩展性。
 
 #### 2、单例会隐藏类之间的依赖关系
 
-通过构造函数、参数传递等方式声明的类之间的依赖关系，我们通过查看函数的定义，就能很容易识别出来。但是，单例类不需要显示创建、不需要依赖参数传递，在函数中直接调用就可以了。如果代码比较复杂，这种调用关系就会非常隐蔽。
+通过构造函数、参数传递等方式声明的类之间的依赖关系，查看函数的定义，就能很容易识别出来。但是，单例类不需要显示创建、不需要依赖参数传递，在函数中直接调用就可以了。如果代码比较复杂，这种调用关系就会非常隐蔽。
 
 #### 3、单例对代码的扩展性不友好
 
-单例类只能有一个对象实例。如果未来某一天，我们需要在代码中创建两个实例或多个实例，那就要对代码有比较大的改动。
+单例类只能有一个对象实例。如果未来某一天，需要在代码中创建两个实例或多个实例，那就要对代码有比较大的改动。
 
-拿数据库连接池来举例说明，在系统设计初期，我们觉得系统中只应该有一个数据库连接池，这样能方便我们控制对数据库连接资源的消耗。所以，我们把数据库连接池类设计成了单例类。后期我们想把慢sql和普通sql进行隔离，这样就需要建立两个数据库连接池实例。但是初始数据库连接池设计成单例类，显然就无法适应这样的需求变更，也就是说，单例类在某些情况下会影响代码的扩展性、灵活性。
+拿数据库连接池来举例说明，在系统设计初期，我们觉得系统中只应该有一个数据库连接池，这样能方便我们控制对数据库连接资源的消耗。所以，初始把数据库连接池类设计成了单例类。后期我们想把慢sql和普通sql进行隔离，这样就需要建立两个数据库连接池实例。但是初始数据库连接池设计成了单例类，显然就无法适应这样的需求变更，也就是说，单例类在某些情况下会影响代码的扩展性和灵活性。
 
 所以，数据库连接池、线程池这类的资源池，最好还是不要设计成单例类。实际上，一些开源的数据库连接池、线程池也确实没有设计成单例类。
 
 #### 4、单例不支持有参数的构造函数
 
-单例不支持有参数的构造函数，比如我们创建一个连接池的单例对象，我们没法通过参数来指定连接池的大小。解决方式是，将参数配置化。在单例实例化时，从外部读取参数。
+单例不支持有参数的构造函数，比如创建一个连接池的单例对象，没法通过参数来指定连接池的大小。解决方式是，将参数配置化。在单例实例化时，从外部读取参数。
 
 ### 六、单例模式的替代方案
 
@@ -326,7 +329,7 @@ public class IdGeneratorUtil {
 }
 ```
 
-实际上，类对象的全局唯一性可以通过多种不同的方式来保证。单例模式、工厂模式、IOC 容器（比如 Spring IOC 容器），还可以通过自我约束，自己在编写代码的时候自己保证不要创建两个类对象。
+实际上，类对象的全局唯一性可以通过多种不同的方式来保证，单例模式、工厂模式、IOC 容器（比如 Spring IOC 容器），还可以通过自我约束，在编写代码时自我保证不要创建两个对象。
 
 ### 七、重新理解单例模式的唯一性
 
@@ -397,7 +400,7 @@ public class Test {
         };
         thread.start();
         thread.join();
-        
+
         System.out.println("main1: " + ThreadLocalIdGenerator.getIntance().toString() + "-->" + ThreadLocalIdGenerator.getIntance().getId());
         System.out.println("main2: " + ThreadLocalIdGenerator.getIntance().toString() + "-->" + ThreadLocalIdGenerator.getIntance().getId());
     }
@@ -406,7 +409,7 @@ public class Test {
 sub1: com.stefan.designPattern.singleton.ThreadLocalIdGenerator@480a0d08-->1
 sub2: com.stefan.designPattern.singleton.ThreadLocalIdGenerator@480a0d08-->2
 main1: com.stefan.designPattern.singleton.ThreadLocalIdGenerator@4f3f5b24-->1
-main2: com.stefan.designPattern.singleton.ThreadLocalIdGenerator@4f3f5b24-->2  
+main2: com.stefan.designPattern.singleton.ThreadLocalIdGenerator@4f3f5b24-->2
 ```
 
 显然主线程和子线程生成的单例不是同一个，且一个线程调用多次生成的是同一个单例对象。
@@ -423,7 +426,7 @@ main2: com.stefan.designPattern.singleton.ThreadLocalIdGenerator@4f3f5b24-->2
 
 #### 4、实现一个多例模式
 
-“单例”指的是，一个类只能创建一个对象。对应地，“多例”指的就是，一个类可以创建多个对象，但是个数是有限制的，比如只能创建 3 个对象。
+“单例”指的是，一个类只能创建一个对象，对应地，“多例”指的就是，一个类可以创建多个对象，但是个数是有限制的，比如只能创建 3 个对象。
 
 ##### （1）以map存储多例的方式
 
@@ -523,14 +526,14 @@ public class Test2 {
 }
 ```
 
-枚举的方式明显要简洁很多，**强烈推荐用枚举方式实现单例和多例模式。** 通过反编译查看源码枚举方式实现的多例其实和前面以map存储多例的方式差不多的原理，都是用`HashMap`把实例化对象存储起来。
+枚举的方式明显要简洁很多，**强烈推荐使用枚举方式实现单例和多例模式。** 通过反编译查看源码，枚举方式实现的多例其实和前面以map存储多例的方式差不多的原理，都是用`HashMap`把实例化对象存储起来。
 
 使用`jad`反编译`MultIdGeneratorEnum.class` :
 
 ```java
 // Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
+// Decompiler options: packimports(3)
 // Source File Name:   MultIdGeneratorEnum.java
 
 package com.stefan.designPattern.singleton;
@@ -567,7 +570,7 @@ public final class MultIdGeneratorEnum extends Enum
     private AtomicLong id;
     private static final MultIdGeneratorEnum $VALUES[];
 
-    static 
+    static
     {
         USER = new MultIdGeneratorEnum("USER", 0);
         PRODUCT = new MultIdGeneratorEnum("PRODUCT", 1);
@@ -583,7 +586,7 @@ public final class MultIdGeneratorEnum extends Enum
 
 ### 八、枚举源码补充
 
-一个枚举类反编译之后，可以看到其继承自`java.lang.Enum`，其中有一个valueof的方法是直接调用`java.lang.Enum#valueOf`的。其底层是一个key为name，value为Enum类型的实例化对象。通过源码可以验证：
+一个枚举类反编译之后，可以看到其继承自`java.lang.Enum`，其中有一个`valueof`的方法是直接调用`java.lang.Enum#valueOf`的。其底层是一个`key`为`name`，`value`为`Enum`类型的实例化对象。通过源码可以验证：
 
 ```java
 package java.lang;
@@ -692,4 +695,3 @@ Map<String, T> enumConstantDirectory() {
         return (Map)directory;
 }
 ```
-
