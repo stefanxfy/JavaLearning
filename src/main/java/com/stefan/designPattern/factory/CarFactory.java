@@ -10,7 +10,8 @@ public class CarFactory {
             return new BmCar("家用");
         } else if ("benz".equals(name)) {
             return new BenzCar();
+        } else {
+            throw new RuntimeException("没有你想要的汽车，如有需要请为工厂增加此汽车类型");
         }
-        return null;
     }
 }
