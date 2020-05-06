@@ -33,13 +33,13 @@ public class Test {
      * @return
      */
     public static void noFactoryTestCarRun(String name) {
-        ICar ICar = null;
         if ("bm".equals(name)) {
-            ICar = new BmCar();
+            return new BmCar("家用");
         } else if ("benz".equals(name)) {
-            ICar = new BenzCar();
+            return new BenzCar();
+        } else {
+            throw new RuntimeException("没有你想要的汽车，如有需要请为工厂增加此汽车类型");
         }
-        ICar.run();
     }
      public static void main(String[] args) {
           noFactoryTestCarRun("bm"); 
@@ -92,9 +92,31 @@ public class Test {
 
 为了让代码逻辑更加清晰，可读性和扩展性更好，我们要善于将功能独立的代码块封装成函数或者类。而为了让类的职责更加单一，最好将创建汽车的过程分离到一个类中，让这个类只负责对象的创建。这就是工厂模式的初衷，如果复杂度无法被消除，那就只能被转移。
 
-实际上，如果不是需要频繁地添加新的Car，只是偶尔修改一下 `CarFactory `代码，稍微不符合开闭原则，也是完全可以接受的。那如何优雅的去掉`if-else`呢？
+实际上，如果不是需要频繁地添加新的Car，只是偶尔修改一下 `CarFactory `代码，稍微不符合开闭原则，也是完全可以接受的。
 
-1、如果对象可以复用，可通过map缓存
+如果创建的对象是可以复用，而不是每次都创建新的，就需要将对象缓存起来，这有点类似单例模式和简单工厂模式的结合。
+
+```java
+/**
+ * 实际上，测跑人员需要对一辆汽车测试多次，所以不能测试都要创建一辆新车出来。
+ * 故需要一个仓库来存汽车。
+ */
+public class CarFactory2 {
+    private static Map<String, ICar> carPool = new HashMap<String, ICar>();
+    static {
+        carPool.put("bm", new BmCar());
+        carPool.put("benz", new BenzCar());
+    }
+
+    public static ICar valueOf(String name) {
+        ICar ICar = carPool.get(name);
+        if (ICar == null) {
+            throw new RuntimeException("没有你想要的汽车，如有需要请为工厂增加此汽车类型");
+        }
+        return ICar;
+    }
+}
+```
 
 ### 二、工厂方法模式
 
@@ -249,4 +271,3 @@ public class Test {
 - `valueOf()` 返回与入参相等的对象，例如 `Integer.valueOf()`，这种情况一般是将对象缓存起来复用。
 - `getInstance()` 返回单例对象，例如 `Calendar.getInstance()`，获取的是单例，同样需要缓存起来。
 - `newInstance() `每次调用时返回新的对象，例如反射。
-

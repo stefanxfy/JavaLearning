@@ -17,14 +17,14 @@ public class BmCar {
     private Screen screen;
     private int lightSize;
 
-    private BmCar(String name, int price, String version, int type, Engine engine, Screen screen, int lightSize) {
-        this.name = name;
-        this.price = price;
-        this.version = version;
-        this.type = type;
-        this.engine = engine;
-        this.screen = screen;
-        this.lightSize = lightSize;
+    private BmCar(Builder builder) {
+        this.name = builder.name;
+        this.price = builder.price;
+        this.version = builder.version;
+        this.type = builder.type;
+        this.engine = builder.engine;
+        this.screen = builder.screen;
+        this.lightSize = builder.lightSize;
     }
 
     public String getName() {
@@ -113,8 +113,6 @@ public class BmCar {
 
         @Override
         public BmCar build() {
-            BmCar bmCar = new BmCar(this.name, this.price, this.version, this.type, this.engine, this.screen, this.lightSize);
-
             if ("v1".equals(this.version)) {
 
                 if (BmCarDef.ScreenType.FM != this.screen.getType()) {
@@ -131,6 +129,7 @@ public class BmCar {
             if (BmCarDef.EngineType.SUPER != this.engine.getType()) {
                 throw new RuntimeException("竞技型宝马的发动机不匹配");
             }
+            BmCar bmCar = new BmCar(this);
             return bmCar;
         }
     }
@@ -142,8 +141,6 @@ public class BmCar {
 
         @Override
         public BmCar build() {
-            BmCar bmCar = new BmCar(this.name, this.price, this.version, this.type, this.engine, this.screen, this.lightSize);
-
             if (BmCarDef.Version.V1.equals(this.version)) {
                 if (this.lightSize != BmCarDef.Version.V1_LIGHT_SIZE) {
                     throw new RuntimeException("家用型宝马的灯的数量不匹配");
@@ -162,9 +159,8 @@ public class BmCar {
             if (BmCarDef.EngineType.NORMAL != this.engine.getType()) {
                 throw new RuntimeException("家用型宝马的发动机不匹配");
             }
+            BmCar bmCar = new BmCar(this);
             return bmCar;
         }
     }
-
-
 }
