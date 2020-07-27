@@ -8,6 +8,7 @@ import java.util.*;
  *
  */
 public class App {
+    private static volatile boolean isStop = false;
     public static void main( String[] args ) {
 //        System.out.println( "Hello World!" );
 //        //1586256985
@@ -20,5 +21,20 @@ public class App {
         int ii = 2;
         String iii = "aa";
         System.out.println(i + ii + iii);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!isStop) {
+                    int i = 0;
+                }
+            }
+        });
+        thread.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        isStop = true;
     }
 }
