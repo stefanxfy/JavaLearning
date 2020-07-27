@@ -1,9 +1,7 @@
 package com.stefan;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Hello world!
@@ -11,14 +9,16 @@ import java.util.Map;
  */
 public class App {
     public static void main( String[] args ) {
-        System.out.println( "Hello World!" );
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put("1", 12);
-
-        List<String>  list = new ArrayList<String>();
-        list.add("12");
-        list.add("13");
-        list.add(0, "14");
-        System.out.println(list);
+//        System.out.println( "Hello World!" );
+//        //1586256985
+//        SimpleDateFormat dt = new SimpleDateFormat("HH:mm");
+//        System.out.println(new Date(1586256985));
+//        System.out.println(dt.format(new Date(1586256985 * 1000L)));;
+        double d = 0.40;
+        System.out.println(d > 0.5);
+        int i = 1;
+        int ii = 2;
+        String iii = "aa";
+        System.out.println(i + ii + iii);
     }
 }
