@@ -26,11 +26,11 @@ public class Test9 {
                 return null;
             }
         });
-        poolExecutor.execute();
-        poolExecutor.submit();
-        poolExecutor.shutdown();
-        poolExecutor.shutdownNow();
-        poolExecutor.awaitTermination()
+//        poolExecutor.execute();
+//        poolExecutor.submit();
+//        poolExecutor.shutdown();
+//        poolExecutor.shutdownNow();
+//        poolExecutor.awaitTermination()
 
 
     }

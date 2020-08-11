@@ -9,13 +9,20 @@ import java.util.List;
  * type=1 竞技型，engine发动机是高级发动机, version不管是v1还是v2，车灯都是6个
  */
 public class BmCar {
-    private String name;
-    private int price;
-    private String version;
+    private String name; //名称
+    private int price; //价格
+    private String version;  //版本
     private int type; //适用类型，0家用型、1竞技型
-    private Engine engine;
-    private Screen screen;
-    private int lightSize;
+    private Engine engine; //引擎、发动机
+    private Screen screen; //驾驶位显示屏
+    private int lightSize;//车灯的个数
+
+    public BmCar(String name, int price, String version, int type) {
+        this.name = name;
+        this.price = price;
+        this.version = version;
+        this.type = type;
+    }
 
     private BmCar(Builder builder) {
         this.name = builder.name;
@@ -53,6 +60,34 @@ public class BmCar {
 
     public int getLightSize() {
         return lightSize;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    public void setScreen(Screen screen) {
+        this.screen = screen;
+    }
+
+    public void setLightSize(int lightSize) {
+        this.lightSize = lightSize;
     }
 
     @Override
