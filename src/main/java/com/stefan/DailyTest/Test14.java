@@ -3,21 +3,27 @@ package com.stefan.DailyTest;
 import java.util.concurrent.*;
 
 public class Test14 {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-        LinkedBlockingDeque<Runnable> workQueue = new LinkedBlockingDeque<Runnable>();
+    public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
+        LinkedBlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>();
         ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(5, 5,
-                30, TimeUnit.SECONDS, workQueue, new ThreadFactory() {
+                30, TimeUnit.SECONDS, workQueue);
+        poolExecutor.execute();
+        Future<Integer> future = poolExecutor.submit(new Callable<Integer>() {
             @Override
-            public Thread newThread(Runnable r) {
-                return null;
+            public Integer call() throws Exception {
+                int i = 100;
+                int j = 100;
+                int sum = i + j;
+                Thread.sleep(2000);
+                return sum;
             }
         });
-        Future<?> future = poolExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("...");
-            }
-        });
-        future.get();
+        long s = System.currentTimeMillis();
+        Integer result = future.get();
+        long e = System.currentTimeMillis();
+        System.out.println("result=" + result + ",ms=" + (e-s));
+
+        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(5);
+        scheduledThreadPoolExecutor.execute();
     }
 }
