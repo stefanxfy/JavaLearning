@@ -7,7 +7,6 @@ public class Test14 {
         LinkedBlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>();
         ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(5, 5,
                 30, TimeUnit.SECONDS, workQueue);
-        poolExecutor.execute();
         Future<Integer> future = poolExecutor.submit(new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
@@ -18,12 +17,12 @@ public class Test14 {
                 return sum;
             }
         });
+        future.cancel(false);
         long s = System.currentTimeMillis();
         Integer result = future.get();
         long e = System.currentTimeMillis();
         System.out.println("result=" + result + ",ms=" + (e-s));
 
         ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(5);
-        scheduledThreadPoolExecutor.execute();
     }
 }
