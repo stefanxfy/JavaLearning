@@ -3,6 +3,7 @@ package com.stefan.DailyTest;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * ReentrantLock实现接口Lock
@@ -27,5 +28,12 @@ public class Test12 {
         Condition condition = lock.newCondition();
         condition.await();
         condition.signal();
+        ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+        readWriteLock.writeLock().newCondition();
+        readWriteLock.readLock().lock();
+        readWriteLock.readLock().unlock();
+        readWriteLock.writeLock().lock();
+        readWriteLock.writeLock().unlock();
+        readWriteLock.readLock().newCondition();
     }
 }
