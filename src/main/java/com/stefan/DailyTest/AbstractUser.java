@@ -6,4 +6,9 @@ public class AbstractUser implements User{
     public void play() {
         System.out.println("AbstractUser play.....");
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
