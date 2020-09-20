@@ -76,6 +76,7 @@ public class CLHLock extends SpinLock{
         node = enq();
         if (!node.isPrevLocked()) {
             //前驱未持有锁，说明可以获取锁，即获取锁成功, prev设置为null，断开与链表的连接，相当于出队列
+            setExclusiveOwnerThread(node.getThread());
             setState(nextc);
             node.prev = null;
             return true;
@@ -97,6 +98,7 @@ public class CLHLock extends SpinLock{
         if (c <= 0) {
             free = true;
             node.setLocked(false);
+            setExclusiveOwnerThread(null);
             threadNode.remove();
         }
         return free;

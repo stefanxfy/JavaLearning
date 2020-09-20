@@ -4,7 +4,7 @@ import sun.misc.Unsafe;
 
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
-public class MCSLock {
+public class MCSLock extends SpinLock{
     class Node {
         volatile Node next;
         //false代表未持有锁，true代表持有锁
@@ -59,6 +59,7 @@ public class MCSLock {
         }
         //threadNode 后继不为空 设置后继的locked=true，主动通知后继获取锁
         h.successor().setLocked(true);
+        h.setLocked(false);
         h.setNext(null);
         threadNode.remove();
     }
@@ -79,21 +80,47 @@ public class MCSLock {
             }
         }
     }
-    public void lock() {
-        Node node = enq();
-        for (;;) {
-            if (node.shouldLocked()) {
-                //判断node是否应该获取锁，若node.locked=true，代表应该获取锁。则结束自旋
-                return;
-            }
-        }
-    }
-    public void unlock() {
+
+    protected boolean tryAcquire(int acquires) {
         Node node = threadNode.get();
-        if (!node.isLocked()) {
-            return;
+        int c = getState();
+        int nextc = c + acquires;
+        if (node != null && getExclusiveOwnerThread() != null && node.getThread() == getExclusiveOwnerThread()) {
+            /**
+             * 一般情况node != null，说明有同一个线程已经调用了lock()
+             * 持有锁的线程是node.thread，重入
+             */
+            setState(nextc);
+            return true;
         }
-        notifySuccessor();
+        node = enq();
+        if (!node.shouldLocked()) {
+            //判断node是否应该获取锁，若node.locked=true，代表应该获取锁。则结束自旋
+            setState(nextc);
+            setExclusiveOwnerThread(node.getThread());
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean tryRelease(int releases) {
+        int c = getState() - releases;
+        final Thread current = Thread.currentThread();
+        if (current != getExclusiveOwnerThread()) {
+            throw new IllegalMonitorStateException();
+        }
+
+        boolean free = false;
+        Node node = threadNode.get();
+        //在node.setLocked(false) 之前设置 state
+        setState(c < 0 ? 0 : c);
+        //完全释放锁，将前驱 locked改为false，让其后继感知锁空闲并停止自旋
+        if (c <= 0) {
+            free = true;
+            setExclusiveOwnerThread(null);
+            notifySuccessor();
+        }
+        return free;
     }
 
     private final boolean compareAndSetTail(Node expect, Node update) {
