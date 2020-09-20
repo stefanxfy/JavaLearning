@@ -39,7 +39,7 @@ public class Test12 {
         readWriteLock.readLock().unlock();
         readWriteLock.writeLock().lock();
         readWriteLock.writeLock().lockInterruptibly();
-        readWriteLock.writeLock().tryLock();
+        readWriteLock.writeLock().unlock();
         System.out.println(readWriteLock.getReadHoldCount());
         System.out.println(readWriteLock.getReadLockCount());
         System.out.println(readWriteLock.getWriteHoldCount());
