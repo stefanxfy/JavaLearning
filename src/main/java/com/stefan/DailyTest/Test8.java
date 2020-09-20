@@ -23,7 +23,7 @@ public class Test8 {
         Session session = Session.getInstance(properties);
         MimeMessage message = new MimeMessage(session);
         message.setSubject("哈哈哈哈测试", "utf-8");
-        message.setContent("测试的点点滴滴", "text/html;charset=UTF-8");
+        message.setContent("测试的点点滴滴\n计算法设计浪费时间\n东方嘉盛的方式来讲", "text/plain;charset=UTF-8");
         message.setSentDate(new Date());
         String[] FORM_ARR = new String[] {"faier@faidns.com", "faier1@faidns.com",
                 "faier2@faidns.com", "faier3@faidns.com",
