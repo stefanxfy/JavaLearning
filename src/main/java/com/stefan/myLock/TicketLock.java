@@ -16,7 +16,7 @@ public class TicketLock extends SpinLock {
                 //若拿的排队号刚好等于owner，说明可以获取锁，即获取锁成功
                 setExclusiveOwnerThread(current);
                 //重入+1
-                setState(1);
+                setState(acquires);
                 return true;
             }
         }
@@ -29,6 +29,7 @@ public class TicketLock extends SpinLock {
             setState(nextc);
             return true;
         }
+//        System.out.println("tryAcquire false, thread=" + current.getId());
         return false;
     }
 

@@ -13,7 +13,7 @@ public class CLHLock extends SpinLock{
         volatile Node prev;
         //true表示正在持有锁，或者需要锁
         //false代表释放锁
-        private boolean locked = true;
+        volatile boolean locked = true;
         volatile Thread thread;
         Node(Thread thread) {
             this.thread = thread;
@@ -75,7 +75,7 @@ public class CLHLock extends SpinLock{
         }
         node = enq();
         if (!node.isPrevLocked()) {
-            //前驱未持有锁，说明可以获取锁，即获取锁成功, prev设置为null，断开与链表的连接，相当于出队列
+            //前驱未持有锁，说明可以获取锁，即获取锁成功, prev设置为null，断开与链表的连接，相当于前驱出队列
             setExclusiveOwnerThread(node.getThread());
             setState(nextc);
             node.prev = null;
@@ -94,7 +94,7 @@ public class CLHLock extends SpinLock{
         Node node = threadNode.get();
         //在node.setLocked(false) 之前设置 state
         setState(c<0 ? 0 : c);
-        //完全释放锁，将前驱 locked改为false，让其后继感知锁空闲并停止自旋
+        //完全释放锁，locked改为false，让其后继感知前驱锁释放并停止自旋
         if (c <= 0) {
             free = true;
             node.setLocked(false);
@@ -107,7 +107,7 @@ public class CLHLock extends SpinLock{
     private final boolean compareAndSetTail(Node expect, Node update) {
         return unsafe.compareAndSwapObject(this, tailOffset, expect, update);
     }
-    private static final Unsafe unsafe = Unsafe.getUnsafe();
+    private static final Unsafe unsafe = getUnsafe();
     private static final long tailOffset;
 
     static {

@@ -2,6 +2,7 @@ package com.stefan.myLock;
 
 import sun.misc.Unsafe;
 
+import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -154,8 +155,21 @@ public class SpinLock implements Lock {
     protected final boolean compareAndSetState(int expect, int update) {
         return unsafe.compareAndSwapInt(this, stateOffset, expect, update);
     }
-
-    private static final Unsafe unsafe = Unsafe.getUnsafe();
+    protected static final Unsafe getUnsafe() {
+        try {
+            //不可以直接使用Unsafe，需要通过反射，当然也可以直接使用atomic类
+            Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
+            theUnsafe.setAccessible(true);
+            Unsafe unsafe = (Unsafe) theUnsafe.get(null);
+            if (unsafe != null) {
+                return unsafe;
+            }
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException("get unsafe is null");
+    }
+    private static final Unsafe unsafe = getUnsafe();
     private static final long stateOffset;
     static {
         try {

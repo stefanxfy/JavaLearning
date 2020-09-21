@@ -8,7 +8,7 @@ public class MCSLock extends SpinLock{
     class Node {
         volatile Node next;
         //false代表未持有锁，true代表持有锁
-        private boolean locked = false;
+        volatile boolean locked = false;
         volatile Thread thread;
         Node(Thread thread) {
             this.thread = thread;
@@ -126,17 +126,11 @@ public class MCSLock extends SpinLock{
     private final boolean compareAndSetTail(Node expect, Node update) {
         return unsafe.compareAndSwapObject(this, tailOffset, expect, update);
     }
-    private final boolean compareAndSetHead(Node update) {
-        return unsafe.compareAndSwapObject(this, headOffset, null, update);
-    }
-    private static final Unsafe unsafe = Unsafe.getUnsafe();
+    private static final Unsafe unsafe = getUnsafe();
     private static final long tailOffset;
-    private static final long headOffset;
 
     static {
         try {
-            headOffset = unsafe.objectFieldOffset
-                    (AbstractQueuedSynchronizer.class.getDeclaredField("head"));
             tailOffset = unsafe.objectFieldOffset
                     (AbstractQueuedSynchronizer.class.getDeclaredField("tail"));
 
