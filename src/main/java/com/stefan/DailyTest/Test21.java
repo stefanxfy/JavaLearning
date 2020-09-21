@@ -1,7 +1,7 @@
 package com.stefan.DailyTest;
 
-import cn.hutool.core.util.RuntimeUtil;
-import cn.hutool.http.HttpUtil;
+//import cn.hutool.core.util.RuntimeUtil;
+//import cn.hutool.http.HttpUtil;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -10,7 +10,7 @@ public class Test21 {
     public static void main(String[] args) {
         String gfw = "faisco.biz";
         System.out.println(gfw.indexOf("faisco.biz"));
-        RuntimeUtil.execForLines();
+//        RuntimeUtil.execForLines();
     }
     private BufferedImage mergeImage(boolean isHorizontal, BufferedImage... imgs) throws IOException {
 

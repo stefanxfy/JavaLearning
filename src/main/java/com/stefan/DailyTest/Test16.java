@@ -1,6 +1,6 @@
 package com.stefan.DailyTest;
 
-import cn.hutool.core.util.ReUtil;
+//import cn.hutool.core.util.ReUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class Test16 {
     public static void main(String[] args) {
-        String s = "\"Gang worker#0 (Parallel GC Threads)\" os_prio=0 tid=0x00007fb5fc01c000 nid=0x36592 runnable\n" +
+       /* String s = "\"Gang worker#0 (Parallel GC Threads)\" os_prio=0 tid=0x00007fb5fc01c000 nid=0x36592 runnable\n" +
                 "++++++++++++++++++++ pid=222611;hex=0x36593;cpu=0.0 ++++++++++++++++++++\n" +
                 "\"Gang worker#1 (Parallel GC Threads)\" os_prio=0 tid=0x00007fb5fc01e000 nid=0x36593 runnable\n" +
                 "++++++++++++++++++++ pid=222612;hex=0x36594;cpu=0.0 ++++++++++++++++++++\n";
@@ -26,6 +26,6 @@ public class Test16 {
         }
         System.out.println(s);
 
-        System.out.println();
+        System.out.println();*/
     }
 }

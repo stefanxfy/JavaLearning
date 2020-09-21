@@ -9,7 +9,7 @@ import java.util.concurrent.locks.Lock;
 
 public class SpinLock implements Lock {
     protected volatile int state = 0;
-    private Thread exclusiveOwnerThread;
+    private volatile Thread exclusiveOwnerThread;
     public void lock() {
         for(;;) {
             //直到获取锁成功，才结束循环
