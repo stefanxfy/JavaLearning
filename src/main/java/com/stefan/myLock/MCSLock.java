@@ -38,15 +38,6 @@ public class MCSLock {
         void setThread(Thread thread) {
             this.thread = thread;
         }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "next=" + next +
-                    ", locked=" + locked +
-                    ", thread=" + thread +
-                    '}';
-        }
     }
     private volatile AtomicReference<Node> tail = new AtomicReference<Node>();
     private ThreadLocal<Node> threadNode = new ThreadLocal<Node>();
@@ -92,6 +83,7 @@ public class MCSLock {
             if (tail.compareAndSet(t, node)) {
                 if (t != null) {
                     t.next = node;
+                    System.out.println("next....");
                 }
                 return node;
             }
@@ -112,7 +104,11 @@ public class MCSLock {
         }
         node = enq();
 //        System.out.println(String.format("lock thread=%d;locked=%b;state=%d;", node.getThread().getId(), node.locked, state));
-        System.out.println("lock next=" + node.next);
+        if (node.next != null) {
+            System.out.println("node locked=" + node.locked);
+            System.out.println("next thread" + node.next.getThread().getId());
+            System.out.println("next locked" + node.next.locked);
+        }
         while (!node.shouldLocked()) {}
         //判断node是否应该获取锁，若node.locked=true，代表应该获取锁。则结束自旋
         state++;
