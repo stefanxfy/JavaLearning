@@ -18,10 +18,16 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 这将导致所有参与排队自旋锁操作的处理器的缓存变得无效。
  * 如果排队自旋锁竞争比较激烈的话，频繁的缓存同步操作会导致繁重的系统总线和内存的流量，从而大大降低了系统整体的性能。
  */
-public class TicketSpinLock extends SpinLock {
+public class TicketSpinLock {
+    //服务序号，不需要cas，因为释放锁的只有一个线程，serviceNum++的环境是天生安全的
     private volatile int serviceNum = 0;
+    //排队序号，cas
     private AtomicInteger ticketNum = new AtomicInteger(0);
+    //记录当前线程的排队号，主要的作用是为了实现可重入，防止多次取号
     private ThreadLocal<Integer> threadOwnerTicketNum = new ThreadLocal<Integer>();
+    //state不作为锁状态标志，只代表锁重入的次数
+    protected volatile int state = 0;
+    private volatile Thread exclusiveOwnerThread;
     public void lock() {
         final Thread current = Thread.currentThread();
         Integer myTicketNum = threadOwnerTicketNum.get();
@@ -56,5 +62,17 @@ public class TicketSpinLock extends SpinLock {
             serviceNum ++;
             System.out.println(String.format("ticket un lock ok, thread=%s;next-serviceNum=%d;ticketNum=%d;", Thread.currentThread().getName(), serviceNum, ticketNum.get()));
         }
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public Thread getExclusiveOwnerThread() {
+        return exclusiveOwnerThread;
+    }
+
+    public void setExclusiveOwnerThread(Thread exclusiveOwnerThread) {
+        this.exclusiveOwnerThread = exclusiveOwnerThread;
     }
 }

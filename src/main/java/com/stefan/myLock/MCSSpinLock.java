@@ -104,7 +104,11 @@ public class MCSSpinLock {
         }
         node = enq();
         while (!node.shouldLocked()) {}
-        //判断node是否应该获取锁，若node.locked=true，代表应该获取锁。则结束自旋
+        //判断node是否应该获取锁，若prev == null or node.locked=true，代表应该获取锁。则结束自旋
+        if (!node.locked) {
+            //当前驱为空时的情况，不过不改也问题不大
+            node.locked = true;
+        }
         state++;
         setExclusiveOwnerThread(node.thread);
         System.out.println(String.format("mcs get lock ok, thread=%s;locked=%b;node==tail=%b;next=%s;", node.thread.getName(), node.locked, node == tail.get(), node.getNextName()));
@@ -125,7 +129,11 @@ public class MCSSpinLock {
         Node prev = enq1();
         node = threadNode.get();
         while (prev != null && !node.locked) {}
-        //判断node是否应该获取锁，若node.locked=true，代表应该获取锁。则结束自旋
+        //判断node是否应该获取锁，若prev == null or node.locked=true，代表应该获取锁。则结束自旋
+        if (!node.locked) {
+            //当前驱为空时的情况，不过不改也问题不大
+            node.locked = true;
+        }
         state++;
         setExclusiveOwnerThread(node.thread);
         System.out.println(String.format("mcs get lock ok, thread=%s;locked=%b;node==tail=%b;next=%s;", node.thread.getName(), node.locked, node == tail.get(), node.getNextName()));
@@ -139,23 +147,25 @@ public class MCSSpinLock {
         //在node.setLocked(false) 之前设置 state
         state--;
         //完全释放锁，将前驱 locked改为false，让其后继感知锁空闲并停止自旋
-        if (state == 0) {
-            while (node.next == null) {
-                Node t = tail.get();
-                if (tail.compareAndSet(t, null)) {
-                    //设置 tail为 null,threadNode remove
-                    threadNode.remove();
-                    System.out.println(String.format("mcs un lock ok, thread=%s;clear queue", node.thread.getName()));
-                    return;
-                }
-            }
-            //threadNode 后继不为空 设置后继的locked=true，主动通知后继获取锁
-            System.out.println(String.format("mcs un lock ok, thread=%s;next-thread=%s;", node.thread.getName(), node.getNextName()));
-            //在node.next.locked前，设置setExclusiveOwnerThread 为null
-            setExclusiveOwnerThread(null);
-            node.next.locked = true;
-            threadNode.remove();
-            node = null; //help gc
+        if (state != 0) {
+            return;
         }
+        //后继为空，则清空队列，将tail  cas为null，
+        //如果此时刚好有节点入队列则退出循环，继续主动通知后继
+        while (node.next == null) {
+            if (tail.compareAndSet(node, null)) {
+                //设置 tail为 null,threadNode remove
+                threadNode.remove();
+                System.out.println(String.format("mcs un lock ok, thread=%s;clear queue", node.thread.getName()));
+                return;
+            }
+        }
+        //threadNode 后继不为空 设置后继的locked=true，主动通知后继获取锁
+        System.out.println(String.format("mcs un lock ok, thread=%s;next-thread=%s;", node.thread.getName(), node.getNextName()));
+        //在node.next.locked前，设置setExclusiveOwnerThread 为null
+        setExclusiveOwnerThread(null);
+        node.next.locked = true;
+        threadNode.remove();
+        node = null; //help gc
     }
 }

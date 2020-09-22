@@ -8,7 +8,7 @@ public class Test {
         CLHSpinLock clhSpinLock = new CLHSpinLock();
         MCSSpinLock mcsSpinLock = new MCSSpinLock();
         long c = System.currentTimeMillis();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
