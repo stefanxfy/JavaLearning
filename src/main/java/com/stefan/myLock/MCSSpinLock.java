@@ -27,6 +27,7 @@ public class MCSSpinLock {
         volatile Node next;
         //false代表未持有锁，true代表可持有锁
         volatile boolean locked = false;
+        volatile boolean isCancel = false;
         volatile Thread thread;
         Node(Thread thread) {
             this.thread = thread;
@@ -42,7 +43,7 @@ public class MCSSpinLock {
     }
     private volatile AtomicReference<Node> tail = new AtomicReference<Node>();
     //线程和node key-value
-    private ThreadLocal<Node> threadNode = new ThreadLocal<Node>();
+    private ThreadLocal<Node> threadOwnerNode = new ThreadLocal<Node>();
     //记录持有锁的当前线程
     private volatile Thread exclusiveOwnerThread;
     //记录重入
@@ -63,7 +64,7 @@ public class MCSSpinLock {
      */
     Node enq() {
         Node node = new Node(Thread.currentThread());
-        threadNode.set(node);
+        threadOwnerNode.set(node);
         for (;;) {
             Node t = tail.get();
             if (tail.compareAndSet(t, node)) {
@@ -82,7 +83,7 @@ public class MCSSpinLock {
      */
     Node enq1() {
         Node node = new Node(Thread.currentThread());
-        threadNode.set(node);
+        threadOwnerNode.set(node);
         Node prev = tail.getAndSet(node);
         if (prev != null) {
             prev.next = node;
@@ -91,7 +92,7 @@ public class MCSSpinLock {
     }
 
     public void lock() {
-        Node node = threadNode.get();
+        Node node = threadOwnerNode.get();
         if (node != null && getExclusiveOwnerThread() != null && node.thread == getExclusiveOwnerThread()) {
             /**
              * 一般情况node != null，说明有同一个线程已经调用了lock()
@@ -115,7 +116,7 @@ public class MCSSpinLock {
     }
 
     public void lock1() {
-        Node node = threadNode.get();
+        Node node = threadOwnerNode.get();
         if (node != null && getExclusiveOwnerThread() != null && node.thread == getExclusiveOwnerThread()) {
             /**
              * 一般情况node != null，说明有同一个线程已经调用了lock()
@@ -127,7 +128,7 @@ public class MCSSpinLock {
             return;
         }
         Node prev = enq1();
-        node = threadNode.get();
+        node = threadOwnerNode.get();
         while (prev != null && !node.locked) {}
         //判断node是否应该获取锁，若prev == null or node.locked=true，代表应该获取锁。则结束自旋
         if (!node.locked) {
@@ -140,7 +141,7 @@ public class MCSSpinLock {
     }
 
     public void unlock() {
-        Node node = threadNode.get();
+        Node node = threadOwnerNode.get();
         if (node.thread != getExclusiveOwnerThread()) {
             throw new IllegalMonitorStateException();
         }
@@ -154,18 +155,32 @@ public class MCSSpinLock {
         //如果此时刚好有节点入队列则退出循环，继续主动通知后继
         while (node.next == null) {
             if (tail.compareAndSet(node, null)) {
-                //设置 tail为 null,threadNode remove
-                threadNode.remove();
+                //设置 tail为 null,threadOwnerNode remove
+                threadOwnerNode.remove();
                 System.out.println(String.format("mcs un lock ok, thread=%s;clear queue", node.thread.getName()));
                 return;
             }
         }
-        //threadNode 后继不为空 设置后继的locked=true，主动通知后继获取锁
+        //threadOwnerNode 后继不为空 设置后继的locked=true，主动通知后继获取锁
         System.out.println(String.format("mcs un lock ok, thread=%s;next-thread=%s;", node.thread.getName(), node.getNextName()));
         //在node.next.locked前，设置setExclusiveOwnerThread 为null
         setExclusiveOwnerThread(null);
         node.next.locked = true;
-        threadNode.remove();
+        threadOwnerNode.remove();
         node = null; //help gc
+    }
+
+    /**
+     * 双向队列才可以取消节点，即当前节点知道自己的前驱和后继
+     */
+    private void cancelAcquire() {
+        Node node = threadOwnerNode.get();
+        if (node == null) {
+            throw new NullPointerException();
+        }
+        Node prev = node.prev;
+        Node next = node.next;
+        prev.next = next;
+        next.next.prev = prev;
     }
 }
