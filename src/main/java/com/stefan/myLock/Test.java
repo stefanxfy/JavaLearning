@@ -12,9 +12,9 @@ public class Test {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    ticketSpinLock.lock();
+                    mcsSpinLock.lock();
                     s--;
-                    ticketSpinLock.unlock();
+                    mcsSpinLock.unlock();
                 }
             });
             thread.start();
