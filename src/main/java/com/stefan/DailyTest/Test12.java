@@ -2,6 +2,7 @@ package com.stefan.DailyTest;
 
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -22,14 +23,15 @@ import java.util.concurrent.locks.StampedLock;
  */
 public class Test12 {
     public static void main(String[] args) throws InterruptedException {
-//        ReentrantLock lock = new ReentrantLock();
-//        lock.lock();
-//        lock.unlock();
-//        lock.tryLock();
-//        lock.lockInterruptibly();
-//        Condition condition = lock.newCondition();
-//        condition.await();
-//        condition.signal();
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        lock.unlock();
+        lock.tryLock();
+        lock.tryLock(100, TimeUnit.SECONDS);
+        lock.lockInterruptibly();
+        Condition condition = lock.newCondition();
+        condition.await();
+        condition.signal();
 
         ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
         readWriteLock.readLock().lock();
