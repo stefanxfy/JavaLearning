@@ -11,6 +11,10 @@ public class Node<E> {
         this.next = next;
     }
 
+    public E getItem() {
+        return item;
+    }
+
     @Override
     public String toString() {
         return "Node{" +
