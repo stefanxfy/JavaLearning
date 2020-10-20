@@ -30,6 +30,7 @@ public class Test9 {
     private static int workerCountOf(int c)  { return c & CAPACITY; }
     private static int ctlOf(int rs, int wc) { return rs | wc; }
 
+
     public static void main(String[] args) {
         System.out.println("COUNT_BITS=" + COUNT_BITS);
         System.out.println("CAPACITY=" + CAPACITY + ",binary=" + Integer.toBinaryString(CAPACITY));
@@ -60,6 +61,21 @@ public class Test9 {
 //        });
 //        poolExecutor.shutdown();
 
+        System.out.println("SHARED_UNIT=" + SHARED_UNIT + ",binary=" + Integer.toBinaryString(SHARED_UNIT));
+        System.out.println("MAX_COUNT=" + MAX_COUNT + ",binary=" + Integer.toBinaryString(MAX_COUNT));
 
+        System.out.println("sharedCount=" + sharedCount(SHARED_UNIT) + ",binary=" + Integer.toBinaryString(sharedCount(SHARED_UNIT)));
     }
+
+    static final int SHARED_SHIFT   = 16;
+
+    static final int SHARED_UNIT    = (1 << SHARED_SHIFT);
+    static final int MAX_COUNT      = (1 << SHARED_SHIFT) - 1;
+    static final int EXCLUSIVE_MASK = (1 << SHARED_SHIFT) - 1;
+
+    static int sharedCount(int c)    { return c >>> SHARED_SHIFT; }
+    /** Returns the number of exclusive holds represented in count  */
+    //独占锁（写锁）重入的次数
+    //按位与
+    static int exclusiveCount(int c) { return c & EXCLUSIVE_MASK; }
 }
