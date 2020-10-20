@@ -32,13 +32,13 @@ public class Test9 {
 
     public static void main(String[] args) {
         System.out.println("COUNT_BITS=" + COUNT_BITS);
-        System.out.println("CAPACITY=" + CAPACITY);
+        System.out.println("CAPACITY=" + CAPACITY + ",binary=" + Integer.toBinaryString(CAPACITY));
 
-        System.out.println("RUNNING=" + RUNNING);
-        System.out.println("SHUTDOWN=" + SHUTDOWN);
-        System.out.println("STOP=" + STOP);
-        System.out.println("TIDYING=" + TIDYING);
-        System.out.println("TERMINATED=" + TERMINATED);
+        System.out.println("RUNNING=" + RUNNING + ",binary=" + Integer.toBinaryString(RUNNING));
+        System.out.println("SHUTDOWN=" + SHUTDOWN + ",binary=" + Integer.toBinaryString(SHUTDOWN));
+        System.out.println("STOP=" + STOP + ",binary=" + Integer.toBinaryString(STOP));
+        System.out.println("TIDYING=" + TIDYING  + ",binary=" + Integer.toBinaryString(TIDYING));
+        System.out.println("TERMINATED=" + TERMINATED  + ",binary=" + Integer.toBinaryString(TERMINATED));
 
         System.out.println("runStateOf=" + runStateOf(STOP));
         System.out.println("workerCountOf=" + workerCountOf(1213));
