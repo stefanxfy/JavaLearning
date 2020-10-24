@@ -65,6 +65,9 @@ public class Test9 {
         System.out.println("MAX_COUNT=" + MAX_COUNT + ",binary=" + Integer.toBinaryString(MAX_COUNT));
 
         System.out.println("sharedCount=" + sharedCount(SHARED_UNIT) + ",binary=" + Integer.toBinaryString(sharedCount(SHARED_UNIT)));
+
+        //1111 1111 1111 1111 1111 1111 1111 1111
+        System.out.println("-1=" + Integer.toBinaryString(-1));
     }
 
     static final int SHARED_SHIFT   = 16;
@@ -78,4 +81,6 @@ public class Test9 {
     //独占锁（写锁）重入的次数
     //按位与
     static int exclusiveCount(int c) { return c & EXCLUSIVE_MASK; }
+
+
 }
