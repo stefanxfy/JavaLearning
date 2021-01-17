@@ -15,7 +15,8 @@ public class Test20200509 {
                 System.out.println("被意外停止了。。。。");
             }
         });
-        test();
+//        test();
+        Thread.sleep(10000);
 
 
     }
