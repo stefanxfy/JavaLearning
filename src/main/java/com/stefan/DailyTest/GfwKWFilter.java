@@ -10,6 +10,7 @@ public class GfwKWFilter {
 			return;
 		}
 		m_kwWordMap = addWordToHashMap(words);
+		System.out.println(m_kwWordMap);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -122,6 +123,7 @@ public class GfwKWFilter {
 		for (int i = 0; i < txt.length(); i++) {
 			// 判断是否包含敏感字符
 			int length = checkWord(txt, i, matchType);
+			System.out.println("length=" + length);
 			// 存在,加入list中
 			if (length > 0) {
 				set.add(txt.substring(i, i + length));
@@ -178,6 +180,8 @@ public class GfwKWFilter {
 	/**
 	 * 检查文字中是否包含敏感字符，检查规则如下：
 	 * 如果存在，则返回敏感词字符的长度，不存在返回0
+	 * * 匹配任何带个字符
+	 * % 匹配任何多个字符
 	 * 
 	 * @param txt
 	 * @param beginIndex
@@ -185,17 +189,32 @@ public class GfwKWFilter {
 	 * @return
 	 */
 	public int checkWord(String txt, int beginIndex, int matchType) {
-
-		// 敏感词结束标识位：用于敏感词只有1位的情况
-		boolean flag = false;
-
 		// 匹配标识数默认为0
-		int matchFlag = 0;
 		Map nowMap = m_kwWordMap;
+		Map nowMapClone = nowMap;
+		int matchFlag = 0;
+		int matchMaxFlag = 0;
 		for (int i = beginIndex; i < txt.length(); i++) {
 			char word = txt.charAt(i);
 			// 获取指定key
 			nowMap = (Map) nowMap.get(word);
+			if (nowMap != null) {
+				// 正常字符可以找到，则同步更新nowMapClone
+				nowMapClone = nowMap;
+			}
+			System.out.println("nowMapClone=" + nowMapClone);
+			if (nowMap == null) {
+				// 当正常字符找不到时，看看是否有 * (单字通配符)
+				nowMap = (Map) nowMapClone.get('*');
+			}
+			if (nowMap == null) {
+				// 当没有 * (单字通配符)时，看看是否有 % (多字通配符)
+				Map nowMapCloneTmp = (Map) nowMapClone.get('%');
+				if (nowMapCloneTmp != null) {
+					// 有 % 则 nowMap依然等于nowMapCloneTmp，达到多次匹配的效果
+					nowMap = nowMapCloneTmp;
+				}
+			}
 			// 存在，则判断是否为最后一个
 			if (nowMap != null) {
 				// 找到相应key，匹配标识+1
@@ -203,8 +222,7 @@ public class GfwKWFilter {
 				// 如果为最后一个匹配规则,结束循环，返回匹配标识数
 				if ("1".equals(nowMap.get("isEnd"))) {
 					// 结束标志位为true
-					flag = true;
-
+					matchMaxFlag = matchFlag;
 					// 最小规则，直接返回,最大规则还需继续查找
 					if (MIN_MATCH_TYPE == matchType) {
 						break;
@@ -216,11 +234,7 @@ public class GfwKWFilter {
 				break;
 			}
 		}
-		// 长度必须大于等于1，为词
-		if (matchFlag < 1 || !flag) {
-			matchFlag = 0;
-		}
-		return matchFlag;
+		return matchMaxFlag;
 	}
 
 	public static final int MIN_MATCH_TYPE = 1;	// 最小匹配规则

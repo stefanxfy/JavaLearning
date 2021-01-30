@@ -73,6 +73,12 @@
           <version>1.0.4</version>
       </dependency>
 
+      <dependency>
+          <groupId>fai-app-arch</groupId>
+          <artifactId>fai-app-arch</artifactId>
+          <version>1.0.3-SNAPSHOT</version>
+      </dependency>
+
   </dependencies>
 
   <build>
