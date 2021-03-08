@@ -73,8 +73,8 @@ public class GfwKWFilter {
 				// 不存在则，则构建一个map，同时将isEnd设置为0，因为他不是最后一个
 				else {
 					// 设置标志位
-					Map<String, String> newMap = new HashMap<String, String>();
-					newMap.put("isEnd", "0");
+					Map<String, Integer> newMap = new HashMap<String, Integer>();
+					newMap.put("isEnd", i == word.length() - 1 ? 1 : 0);
 					// 添加到集合
 					nowMap.put(keyChar, newMap);
 					nowMap = newMap;
@@ -191,30 +191,12 @@ public class GfwKWFilter {
 	public int checkWord(String txt, int beginIndex, int matchType) {
 		// 匹配标识数默认为0
 		Map nowMap = m_kwWordMap;
-		Map nowMapClone = nowMap;
 		int matchFlag = 0;
 		int matchMaxFlag = 0;
 		for (int i = beginIndex; i < txt.length(); i++) {
 			char word = txt.charAt(i);
 			// 获取指定key
 			nowMap = (Map) nowMap.get(word);
-			if (nowMap != null) {
-				// 正常字符可以找到，则同步更新nowMapClone
-				nowMapClone = nowMap;
-			}
-			System.out.println("nowMapClone=" + nowMapClone);
-			if (nowMap == null) {
-				// 当正常字符找不到时，看看是否有 * (单字通配符)
-				nowMap = (Map) nowMapClone.get('*');
-			}
-			if (nowMap == null) {
-				// 当没有 * (单字通配符)时，看看是否有 % (多字通配符)
-				Map nowMapCloneTmp = (Map) nowMapClone.get('%');
-				if (nowMapCloneTmp != null) {
-					// 有 % 则 nowMap依然等于nowMapCloneTmp，达到多次匹配的效果
-					nowMap = nowMapCloneTmp;
-				}
-			}
 			// 存在，则判断是否为最后一个
 			if (nowMap != null) {
 				// 找到相应key，匹配标识+1
