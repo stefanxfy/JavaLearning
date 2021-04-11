@@ -112,6 +112,7 @@ public class MCSSpinLock {
         }
         state++;
         setExclusiveOwnerThread(node.thread);
+        node.prev = null;
         System.out.println(String.format("mcs get lock ok, thread=%s;locked=%b;node==tail=%b;next=%s;", node.thread.getName(), node.locked, node == tail.get(), node.getNextName()));
     }
 
@@ -165,8 +166,9 @@ public class MCSSpinLock {
         System.out.println(String.format("mcs un lock ok, thread=%s;next-thread=%s;", node.thread.getName(), node.getNextName()));
         //在node.next.locked前，设置setExclusiveOwnerThread 为null
         setExclusiveOwnerThread(null);
-        node.next.locked = true;
         threadOwnerNode.remove();
+        node.next.locked = true;
+        node.next = null;
         node = null; //help gc
     }
 

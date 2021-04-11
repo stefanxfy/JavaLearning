@@ -3,9 +3,25 @@ package com.stefan.DailyTest;
 public class Test0307 {
     private static int RESIZE_STAMP_BITS = 16;
     private static final int RESIZE_STAMP_SHIFT = 32 - RESIZE_STAMP_BITS;
+    private static final int MAX_RESIZERS = (1 << (32 - RESIZE_STAMP_BITS)) - 1;
 
 
     public static void main(String[] args) {
+        int rs = resizeStamp(64);
+        int sc = (resizeStamp(64)<< RESIZE_STAMP_SHIFT) + 2;
+
+        if ((sc >>> RESIZE_STAMP_SHIFT) != rs || sc == rs + 1 ||
+                sc == rs + MAX_RESIZERS) {
+
+        }
+        System.out.println(sc);
+        System.out.println(rs + MAX_RESIZERS);
+        System.out.println(rs + 1);
+        /*System.out.println((sc >>> 16) == rs);
+        System.out.println(sc == rs + MAX_RESIZERS);
+        System.out.println(rs + MAX_RESIZERS);
+        System.out.println(rs);
+        System.out.println(MAX_RESIZERS);
         int initialCapacity = 32;
         initialCapacity = initialCapacity + (initialCapacity >>> 1) + 1;
         System.out.println(initialCapacity);
@@ -20,8 +36,8 @@ public class Test0307 {
         System.out.println(Integer.toBinaryString(resizeStamp(4)<< RESIZE_STAMP_SHIFT));
         System.out.println(Integer.toBinaryString(resizeStamp(2)<< RESIZE_STAMP_SHIFT));
 
-        System.out.println(resizeStamp(64));
-        System.out.println(resizeStamp(32));
+        System.out.println(resizeStamp(64) + ":" + Integer.toBinaryString(resizeStamp(64)));
+        System.out.println(resizeStamp(32) + ":" + Integer.toBinaryString(resizeStamp(32)));
         System.out.println(resizeStamp(16));
 
         System.out.println(resizeStamp(8));
@@ -34,7 +50,7 @@ public class Test0307 {
         System.out.println(Integer.toBinaryString(Integer.numberOfLeadingZeros(4)));
         System.out.println(Integer.toBinaryString(Integer.numberOfLeadingZeros(8)));
         System.out.println(Integer.toBinaryString(Integer.numberOfLeadingZeros(16)));
-        System.out.println(Integer.toBinaryString(Integer.numberOfLeadingZeros(16)));
+        System.out.println(Integer.toBinaryString(Integer.numberOfLeadingZeros(16)));*/
 
     }
 
