@@ -4,21 +4,16 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadLocalTest {
     public static void main(String[] args) throws InterruptedException {
-        ThreadLocal<User> threadLocal = new ThreadLocal<>();
+        ThreadLocal<String> tl = new ThreadLocal<>();
+        tl.set("徐同学呀");
 
-        try {
-            threadLocal.set(new User());
-            threadLocal.get();
-        } finally {
-//            threadLocal.remove();
-        }
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("value=" + tl.get());
+            }
+        });
+        t.start();
 
-        TimeUnit.MINUTES.sleep(5);
     }
-
-    static class User {
-        private byte[] datas = new byte[1024*1024*100];
-    }
-
-    private static ThreadLocal<User> threadLocal = new ThreadLocal<>();
 }

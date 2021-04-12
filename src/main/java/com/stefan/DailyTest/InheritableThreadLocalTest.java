@@ -1,19 +1,27 @@
 package com.stefan.DailyTest;
 
-import java.util.concurrent.TimeUnit;
-
 public class InheritableThreadLocalTest {
     public static void main(String[] args) throws InterruptedException {
-        InheritableThreadLocal<String> itl = new InheritableThreadLocal<>();
-
-        itl.set("徐同学呀");
-        Thread thread = new Thread(new Runnable() {
+        InheritableThreadLocal<Stu> itl = new MyInheritableThreadLocal<Stu>();
+        itl.set(new Stu());
+        System.out.println("主线程：" + itl.get().toString());
+        Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println(itl.get());
+                System.out.println("子线程1：" + itl.get().toString());
             }
         });
-        thread.start();
-        TimeUnit.MINUTES.sleep(10);
+        thread1.start();
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("子线程2：" + itl.get().toString());
+            }
+        });
+        thread2.start();
+    }
+
+    static class Stu {
+        private String name = "xxx";
     }
 }
