@@ -81,10 +81,16 @@
           <version>1.0.4</version>
       </dependency>
 
+      <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
       <dependency>
-          <groupId>fai-app-arch</groupId>
-          <artifactId>fai-app-arch</artifactId>
-          <version>1.0.3-SNAPSHOT</version>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpclient</artifactId>
+          <version>4.5.13</version>
+      </dependency>
+      <dependency>
+          <groupId>qconf-client</groupId>
+          <artifactId>qconf-client</artifactId>
+          <version>1.2.2</version>
       </dependency>
 
   </dependencies>
