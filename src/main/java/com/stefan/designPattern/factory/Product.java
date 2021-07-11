@@ -2,9 +2,9 @@ package com.stefan.designPattern.factory;
 
 import java.lang.annotation.*;
 
-@Target(ElementType.TYPE)
-@Inherited
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Car {
-    String value() default "";
+@Target(ElementType.TYPE)
+public @interface Product {
+    public String name() default "";
 }
