@@ -1,23 +1,19 @@
 package com.stefan.DailyTest;
 
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Test308 {
-    public static void main(String[] args) {
-//        System.out.println(33&16);
-//        System.out.println(33&15);
-//        System.out.println(33&31);
-//        System.out.println(Integer.toBinaryString(16));
-//        System.out.println(Integer.toBinaryString(33));
-//        System.out.println(Integer.toBinaryString(33));
-//        System.out.println(Integer.toBinaryString(17));
-//        System.out.println();
-        System.out.println(3|4);
-        System.out.println(8|5);
-        System.out.println(4|2);
-        System.out.println(Integer.toBinaryString(2));
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+        File file = new File("D:/mysoft/apache-tomcat-8.5.42-src/tomcat/conf/demo1.conf");
+        System.out.println(file.exists());
+        InputStream inputStream = null;
+    }
 
-        System.out.println(Integer.toBinaryString(3));
-        System.out.println(Integer.toBinaryString(5));
-        // |的运算效果,
-
+    public static void test(Object... groupByColumns) {
+        System.out.println(groupByColumns.length);
     }
 }
