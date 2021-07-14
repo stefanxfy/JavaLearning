@@ -27,7 +27,6 @@ public class TestHttpClient {
                 }
             }
         };
-
         //Creating a CloseableHttpClient object
         CloseableHttpClient httpclient =
                 HttpClients.custom().addInterceptorFirst(requestInterceptor).build();
@@ -42,8 +41,6 @@ public class TestHttpClient {
 
         //Executing the request
         HttpResponse httpresponse = httpclient.execute(httpget1);
-
-        //Printing the status line
         System.out.println(httpresponse.getStatusLine());
 
     }

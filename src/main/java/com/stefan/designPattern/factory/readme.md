@@ -19,6 +19,7 @@ public interface ICar {
     void run();
 }
 public class BmCar implements ICar {
+      
       System.out.println("宝马汽车试跑");
 }
 public class BenzCar implements ICar {
@@ -94,7 +95,7 @@ public class Test {
 
 实际上，如果不是需要频繁地添加新的Car，只是偶尔修改一下 `CarFactory `代码，稍微不符合开闭原则，也是完全可以接受的。
 
-如果创建的对象是可以复用，而不是每次都创建新的，就需要将对象缓存起来，这有点类似单例模式和简单工厂模式的结合。
+如果创建的对象是可以复用，而不是每次都创建新的，就可以将对象缓存起来，这有点类似单例模式和简单工厂模式的结合。
 
 ```java
 /**
