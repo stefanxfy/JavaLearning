@@ -95,7 +95,14 @@
       <dependency>
           <groupId>fai-comm-util-arch</groupId>
           <artifactId>fai-comm-util-arch</artifactId>
-          <version>1.0.4</version>
+          <version>1.1.4</version>
+
+          <exclusions>
+              <exclusion>
+                  <groupId>poi*</groupId>
+                  <artifactId>poi*</artifactId>
+              </exclusion>
+          </exclusions>
       </dependency>
 
       <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
@@ -116,6 +123,99 @@
           <artifactId>fastjson</artifactId>
           <version>1.2.76</version>
       </dependency>
+
+      <dependency>
+          <groupId>com.github.java-json-tools</groupId>
+          <artifactId>json-patch</artifactId>
+          <version>1.13</version>
+      </dependency>
+
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.5.1</version>
+      </dependency>
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
+          <version>2.5.1</version>
+      </dependency>
+
+      <!-- poi jar-->
+      <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi</artifactId>
+          <version>3.14</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi-scratchpad</artifactId>
+          <version>3.14</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi-ooxml</artifactId>
+          <version>3.14</version>
+      </dependency>
+      <dependency>
+          <groupId>fr.opensagres.xdocreport</groupId>
+          <artifactId>xdocreport</artifactId>
+          <version>1.0.6</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi-ooxml-schemas</artifactId>
+          <version>3.14</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>ooxml-schemas</artifactId>
+          <version>1.3</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+      <dependency>
+          <groupId>dom4j</groupId>
+          <artifactId>dom4j</artifactId>
+          <version>1.6.1</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans -->
+      <dependency>
+          <groupId>org.apache.xmlbeans</groupId>
+          <artifactId>xmlbeans</artifactId>
+          <version>2.6.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>com.docsdk</groupId>
+          <artifactId>docsdk-java</artifactId>
+          <version>1.0.3</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.jsoup</groupId>
+          <artifactId>jsoup</artifactId>
+          <version>1.11.3</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.docx4j</groupId>
+          <artifactId>docx4j</artifactId>
+          <version>3.3.6</version>
+      </dependency>
+      <dependency>
+          <groupId>org.docx4j</groupId>
+          <artifactId>docx4j-ImportXHTML</artifactId>
+          <version>3.3.6</version>
+      </dependency>
+      <dependency>
+          <groupId>org.docx4j</groupId>
+          <artifactId>docx4j-export-fo</artifactId>
+          <version>3.3.6</version>
+      </dependency>
+
+
 
 
   </dependencies>
