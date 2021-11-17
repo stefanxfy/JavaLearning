@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -199,7 +198,7 @@
           <version>1.11.3</version>
       </dependency>
 
-      <dependency>
+<!--      <dependency>
           <groupId>org.docx4j</groupId>
           <artifactId>docx4j</artifactId>
           <version>3.3.6</version>
@@ -213,6 +212,58 @@
           <groupId>org.docx4j</groupId>
           <artifactId>docx4j-export-fo</artifactId>
           <version>3.3.6</version>
+      </dependency>-->
+
+      <dependency>
+          <groupId>org.docx4j</groupId>
+          <artifactId>docx4j-core</artifactId>
+          <version>8.2.6</version>
+      </dependency>
+      <dependency>
+          <groupId>org.docx4j</groupId>
+          <artifactId>docx4j-JAXB-ReferenceImpl</artifactId>
+          <version>8.2.6</version>
+      </dependency>
+      <dependency>
+          <groupId>org.docx4j</groupId>
+          <artifactId>docx4j-ImportXHTML</artifactId>
+          <version>8.0.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jul-to-slf4j</artifactId>
+          <version>1.6.6</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+          <version>1.6.6</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+          <version>1.6.6</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+          <version>1.6.6</version>
+      </dependency>
+
+      <dependency>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+          <version>18.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+          <version>1.2.16</version>
       </dependency>
 
 

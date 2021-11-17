@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
  */
 public class Test4 {
     public static void main(String[] args) throws Exception {
+        String inputfilepath = "C:\\Users\\faisco\\Downloads\\jumpServer\\测试文档.docx.html.docx";
+
         DocxConverter.DocxPicturesManager picturesManager = new DocxConverter.DocxPicturesManager() {
             @Override
             public String savePicture(byte[] bytes, String imgName) {
@@ -20,9 +22,9 @@ public class Test4 {
                 return path;
             }
         };
-        FileInputStream inputStream = new FileInputStream("C:\\Users\\faisco\\Downloads\\zk\\test1.docx");
+        FileInputStream inputStream = new FileInputStream(inputfilepath);
         byte[] data = DocxConverter.getFormatBytes(inputStream, picturesManager, "utf-8", "html");
         System.out.println(new String(data));
-        FileEx.append("C:\\Users\\faisco\\Downloads\\zk\\test1.docx.html", data);
+        FileEx.append(inputfilepath + ".html", data);
     }
 }

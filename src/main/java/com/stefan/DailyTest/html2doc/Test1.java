@@ -25,10 +25,10 @@ public class Test1 {
         //获取DirectoryEntry
         DirectoryEntry directory = poifs.getRoot();
         //创建输出流
-        OutputStream out = new FileOutputStream("C:/Users/faisco/Downloads/zk/test1.docx.html.docx");
+        OutputStream out = new FileOutputStream("D:\\mysoft\\faiscoGit\\myStudy\\docx4j\\sample-docs\\心理咨询的基本要求.docx.html.docx");
         try {
 //            InputStream ins = new FileInputStream("C:\\Users\\faisco\\Downloads\\jumpServer\\心理咨询的基本要求.docx.html");
-            String html = FileEx.readTxtFile("C:/Users/faisco/Downloads/zk/test1.docx.html", "utf-8");
+            String html = FileEx.readTxtFile("D:\\mysoft\\faiscoGit\\myStudy\\docx4j\\sample-docs\\心理咨询的基本要求.docx.html", "utf-8");
             //创建文档,1.格式,2.HTML文件输入流
             html = replaceImg(html);
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(html.getBytes());
@@ -44,12 +44,16 @@ public class Test1 {
     }
 
     private static String replaceImg(String html) {
-        String base64Img = "data:image/png;base64";
+        String base64Img = "data:image";
         Document doc = Jsoup.parse(html);
         Elements imgs = doc.select("img");
         for (Element img : imgs) {
             String imgUrl = img.attr("src");
             if (imgUrl.startsWith(base64Img)) {
+                continue;
+            }
+            if (imgUrl == "") {
+                System.out.println("empty");
                 continue;
             }
             System.out.println(imgUrl);
